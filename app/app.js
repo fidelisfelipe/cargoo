@@ -1,5 +1,6 @@
 'use strict';
 angular.module('cargoo', [
   // load your modules here
-  'main', // starting with the main module
+  'main',
+  'home', // starting with the main module
 ]);

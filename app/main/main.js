@@ -8,13 +8,22 @@ angular.module('main', [
 .config(function ($stateProvider, $urlRouterProvider) {
 
   // ROUTING with ui.router
-  $urlRouterProvider.otherwise('/main');
+  $urlRouterProvider.otherwise('/entrar');
   $stateProvider
     // this state is placed in the <ion-nav-view> in the index.html
-    .state('main', {
-      url: '/main',
-      template: '<ion-view view-title="main"></ion-view>',
-      // templateUrl: 'main/templates/<someTemplate>.html',
-      // controller: 'SomeCtrl as ctrl'
+    .state('entrar', {
+      url: '/entrar',
+      templateUrl: 'main/templates/entrar.html',
+      controller: 'MainCtrl as main'
+    })
+    .state('login', {
+      url: '/login',
+      templateUrl: 'main/templates/login.html',
+      controller: 'LoginCtrl as login'
+    })
+    .state('recover', {
+      url: '/recover',
+      templateUrl: 'main/templates/recover.html',
+      controller: 'LoginCtrl as login'
     });
 });

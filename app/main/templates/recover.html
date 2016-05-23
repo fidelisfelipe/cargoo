@@ -1,0 +1,13 @@
+<ion-view view-title="Recover">
+  <!-- do you want padding? -->
+  <ion-content class="padding">
+    <h2>Recover Password Account</h2>
+	<p>Info you email for recover password account</p>
+	  <div class="list list-inset">
+          <label class="item item-input">
+              <input type="text" placeholder="Email" ng-model="login.data.email">
+          </label>
+      </div>
+	  <button class="button button-block button-calm" ng-click="login.recoverSend()">Recover Password</button>
+  </ion-content>
+</ion-view>
