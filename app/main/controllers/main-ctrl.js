@@ -10,4 +10,7 @@ angular.module('main')
     LoginSrv.logout();
     $state.go('entrar');
   };
+  this.facebook = function () {
+    $state.go('authfacebook');
+  };
 });
