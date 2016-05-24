@@ -3,6 +3,8 @@ angular.module('main', [
   'ionic',
   'ngCordova',
   'ui.router',
+  'ngMessages',
+  'ui.utils.masks',
   // TODO: load other modules selected during generation
 ])
 .config(function ($stateProvider, $urlRouterProvider) {

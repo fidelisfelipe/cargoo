@@ -21,6 +21,7 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="auth/styles/auth.css">
     <link rel="stylesheet" href="home/styles/home.css">
+    <link rel="stylesheet" href="main/styles/form-login.css">
     <link rel="stylesheet" href="main/styles/login.css">
     <!-- endinject -->
     <!-- endbuild -->
@@ -51,13 +52,16 @@
     <script src="bower_components/angular-translate/angular-translate.js"></script>
     <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
     <script src="bower_components/localforage/dist/localforage.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-input-masks/angular-input-masks-standalone.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
-
+	<script src="bower_components/angular-i18n/angular-locale_pt-br.js"></script>
     <!-- build:js scripts/app.js -->
     <!-- inject:js -->
     <script src="main/main.js"></script>
     <script src="main/services/login-serv.js"></script>
+    <script src="main/directives/custom-async-user-exist-validator-dir.js"></script>
     <script src="main/controllers/main-ctrl.js"></script>
     <script src="main/controllers/login-ctrl.js"></script>
     <script src="main/constants/config-const.js"></script>

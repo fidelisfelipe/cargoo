@@ -7,7 +7,7 @@ angular.module('main')
     loginUser: function (email, pw) {
       var deferred = $q.defer();
       var promise = deferred.promise;
-      if (email === 'user' && pw === 'secret') {
+      if (email === 'atosfiel@gmail.com' && pw === '123456') {
         credentials.email = email;
         deferred.resolve('Welcome ' + email + '!');
       } else {

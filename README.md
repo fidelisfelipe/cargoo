@@ -20,6 +20,13 @@ Development:
 [![Dev Build Status](https://img.shields.io/travis/mwaylabs/generator-m-ionic/dev.svg?style=flat-square)][travis-url]
 [![Dev Dependency Status](http://img.shields.io/david/mwaylabs/generator-m-ionic/dev.svg?style=flat-square)](https://david-dm.org/mwaylabs/generator-m-ionic/dev)
 
+Evolution:
+
+Added angular-i18n: see [https://github.com/angular/bower-angular-i18n] [bower install angular-i18n]
+Added angular-messages: see [https://docs.angularjs.org/api/ngMessages] [bower install angular-messages]
+Added angular-input-masks: see [https://github.com/assisrafael/angular-input-masks] [bower install --save angular-input-masks]
+Added auth session: see [https://devdactic.com/user-auth-angularjs-ionic]
+
 
 ## Why you need it
 > Build mobile Cordova/PhoneGap apps quickly with the tools you love:

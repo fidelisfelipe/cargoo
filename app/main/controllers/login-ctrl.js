@@ -2,22 +2,25 @@
 angular.module('main')
 .controller('LoginCtrl', function ($log, $state, $ionicPopup, LoginSrv) {
   var login = this;
-  login.data = { 'email': null, 'password': null};
+  login.data = {};
   $log.log('Hello from your Controller: LoginCtrl in module main:. This is your controller:', this);
-  this.login = function () {
+  this.login = function (formLogin) {
     $log.log('email:', this.data.email);
     $log.log('password:', this.data.password);
-    LoginSrv.loginUser(login.data.email, login.data.password).success(function (data) {
-      $log.log('success login:', data);
-      $state.go('home.welcome');
-      login.data = {};
-    }).error(function (data) {
-      $log.log('error login:', data);
-      $ionicPopup.alert({
-        title: 'Login failed!',
-        template: 'Please check your credentials!'
+    $log.log('form valid: ', formLogin.$valid);
+    if (formLogin.$valid) {
+      LoginSrv.loginUser(login.data.email, login.data.password).success(function (data) {
+        $log.log('success login:', data);
+        $state.go('home.welcome');
+        login.data = {};
+      }).error(function (data) {
+        $log.log('error login:', data);
+        $ionicPopup.alert({
+          title: 'Login failed!',
+          template: 'Please check your credentials!'
+        });
       });
-    });
+    }
   };
   this.recover = function () {
     $log.log('recover password');
