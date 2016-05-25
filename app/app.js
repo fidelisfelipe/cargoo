@@ -4,12 +4,10 @@ angular.module('cargoo', [
   'main',
   'home',
   'auth', // starting with the main module
-])
-.constant('AUTH_EVENTS', {
-  notAuthenticated: 'auth-not-authenticated',
-  notAuthorized: 'auth-not-authorized'
-})
-.constant('USER_ROLES', {
-  admin: 'admin_role',
-  public: 'public_role'
+]).config(function ($httpProvider) {
+  $httpProvider.defaults.useXDomain = true;
+  $httpProvider.defaults.headers.common["Accept"] = "application/json";
+  $httpProvider.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+  $httpProvider.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET';
+  $httpProvider.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type';
 });

@@ -3,6 +3,9 @@ angular.module('main')
 .controller('MainCtrl', function ($log, $state, LoginSrv) {
 
   $log.log('Hello from your Controller: MainCtrl in module main:. This is your controller:', this);
+  this.account = function () {
+    $state.go('account');
+  };
   this.login = function () {
     $state.go('login');
   };
@@ -13,4 +16,5 @@ angular.module('main')
   this.facebook = function () {
     $state.go('authfacebook');
   };
+
 });

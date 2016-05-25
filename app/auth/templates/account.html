@@ -1,0 +1,99 @@
+<ion-view view-title="Facebook Login">
+  <!-- do you want padding? -->
+	<ion-content class="padding">
+		<form class="formValidate" name="formAccount" ng-submit="account.account(formAccount)" novalidate>
+			<div class="list">
+				<label class="item item-input item-floating-label" 
+					ng-class="{ 'has-errors' : formAccount.nome.$invalid && formAccount.$submitted, 'no-errors' : formAccount.nome.$valid && formAccount.$submitted}">
+				  <span class="input-label">{{account.data.nome.title}}</span>
+				  <input type="text" placeholder="{{account.data.nome.placeholder}}" name="nome" ng-model="account.data.nome.value" ng-minlength="2" ng-maxlength="50" required>
+				</label>
+				<div class="error-container" ng-show="formAccount.nome.$error  && formAccount.$submitted" ng-messages="formAccount.nome.$error">
+				  <div ng-messages-include="error-list-simple.html"></div>
+				</div>
+
+				<label class="item item-input item-floating-label" 
+					ng-class="{ 'has-errors' : formAccount.email.$invalid && formAccount.$submitted, 'no-errors' : formAccount.email.$valid && formAccount.$submitted}">
+				  <span class="input-label">{{account.data.email.title}}</span>
+				  <input type="text" placeholder="{{account.data.email.placeholder}}" name="email" ng-model="account.data.email.value" ng-minlength="10" ng-maxlength="30" required custom-async-user-exist-validator="/main/data/emails.json">
+				</label>
+				<div class="error-container" ng-show="formAccount.email.$error && formAccount.$submitted" ng-messages="formAccount.email.$error">
+				  <div ng-messages-include="error-list-simple.html"></div>
+				</div>
+
+				<label class="item item-input item-floating-label" 
+					ng-class="{ 'has-errors' : formAccount.cpf.$invalid && formAccount.$submitted, 'no-errors' : formAccount.cpf.$valid}">
+				  <span class="input-label">{{account.data.cpf.title}}</span>
+				  <input type="text" placeholder="{{account.data.cpf.placeholder}}" name="cpf" ng-model="account.data.cpf.value" ng-minlength="14" ng-maxlength="14" ui-br-cpf-mask required>
+				</label>
+				<div class="error-container" ng-show="formAccount.cpf.$error && formAccount.$submitted" ng-messages="formAccount.cpf.$error">
+				  <div ng-messages-include="error-list-simple.html"></div>
+				</div>
+
+				<label class="item item-input item-floating-label"
+					ng-class="{ 'has-errors' : formAccount.telefone.$invalid && formAccount.$submitted, 'no-errors' : formAccount.telefone.$valid}">
+				  <span class="input-label">{{account.data.telefone.title}}</span>
+				  <input type="tel" placeholder="{{account.data.telefone.placeholder}}" name="telefone" ng-model="account.data.telefone.value" ng-minlength="14" ng-maxlength="15" ui-br-phone-number required>
+				</label>
+				<div class="error-container" ng-show="formAccount.telefone.$error && formAccount.$submitted" ng-messages="formAccount.telefone.$error">
+				  <div ng-messages-include="error-list-simple.html"></div>
+				</div>
+				
+				<label class="item item-input item-floating-label"
+					ng-class="{ 'has-errors' : formAccount.dataNascimento.$invalid && formAccount.$submitted, 'no-errors' : formAccount.dataNascimento.$valid}">
+				  <span class="input-label">{{account.data.dataNascimento.title}}</span>
+				  <input type="text" placeholder="{{account.data.dataNascimento.placeholder}}" name="dataNascimento" ng-model="account.data.dataNascimento.value" ui-date-mask required>
+				</label>
+				<div class="error-container" ng-show="formAccount.dataNascimento.$error && formAccount.$submitted" ng-messages="formAccount.dataNascimento.$error">
+				  <div ng-messages-include="error-list-simple.html"></div>
+				</div>
+
+				<label class="item item-input item-floating-label"
+					ng-class="{ 'has-errors' : formAccount.senha.$invalid && formAccount.$submitted, 'no-errors' : formAccount.senha.$valid}">
+				  <span class="input-label">{{account.data.senha.title}}</span>
+				  <input type="password" placeholder="{{account.data.senha.placeholder}}" name="senha" ng-model="account.data.senha.value" ng-minlength="6" ng-maxlength="6" required>
+				</label>
+				<div class="error-container last-error-container" ng-show="formAccount.senha.$error && formAccount.$submitted" ng-messages="formAccount.senha.$error">
+				  <div ng-messages-include="error-list-simple.html"></div>
+				</div>
+
+				<button type="submit" class="button button-full button-stabled" >{{account.data.btnCriar.title}}</button>
+			</div>
+		</form>
+		<ion-list>
+		  <ion-item ng-click="account.mock()" >mock</ion-item>
+		  <ion-item ng-click="account.clear()" >clear</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-view>
+
+<script id="error-list-simple.html" type="text/ng-template">
+	<div class="error" ng-message="date">
+		<i class="ion-information-circled"></i> 
+		Data inválida
+	</div>
+	<div class="error" ng-message="required">
+		<i class="ion-information-circled"></i> 
+		Campo Obrigatório!
+	</div>
+	<div class="error" ng-message="minlength">
+		<i class="ion-information-circled"></i> 
+		Muito curto
+	</div>
+	<div class="error" ng-message="maxlength">
+		<i class="ion-information-circled"></i> 
+		Muito longo
+	</div>
+	<div class="error" ng-message="cpf">
+		<i class="ion-information-circled"></i> 
+		Informe CPF válido
+	</div>
+	<div class="error" ng-message="customAsyncUserExist">
+		<i class="ion-information-circled"></i> 
+		Usuário já cadastrado!
+	</div>
+	<div class="error" ng-message="customAsyncUserExistLoading">
+		<i class="ion-information-circled"></i> 
+		Verificando Usuário...
+	</div>
+</script>

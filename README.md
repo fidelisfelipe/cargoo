@@ -22,10 +22,11 @@ Development:
 
 Evolution:
 
-Added angular-i18n: see [https://github.com/angular/bower-angular-i18n] [bower install angular-i18n]
+Added angular-i18n: see [https://github.com/angular/bower-angular-i18n] [bower install angular-i18n --save]
 Added angular-messages: see [https://docs.angularjs.org/api/ngMessages] [bower install angular-messages]
 Added angular-input-masks: see [https://github.com/assisrafael/angular-input-masks] [bower install --save angular-input-masks]
 Added auth session: see [https://devdactic.com/user-auth-angularjs-ionic]
+Added mock : see [https://docs.angularjs.org/api/ngMock] [bower install angular-mocks --save]
 
 
 ## Why you need it
