@@ -53,16 +53,16 @@ angular.module('auth')
         var result = $http.get('http://cep.paicon.com.br/json/72145811');
         result.success(function (data) {
           $ionicPopup.alert({
-             title: 'Fail',
-             template: data
-           });
+            title: 'Fail',
+            template: data
+          });
         });
-		result.error(function (results) {
-			$ionicPopup.alert({
-             title: 'Fail',
-             template: results
-           });
-		});
+        result.error(function (results) {
+          $ionicPopup.alert({
+            title: 'Fail',
+            template: results
+          });
+        });
       });
     }
   };
