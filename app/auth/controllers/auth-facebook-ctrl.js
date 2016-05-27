@@ -1,6 +1,6 @@
 'use strict';
 angular.module('auth')
-.controller('AuthFacebookCtrl', function ($log, $scope, $state, $q, UserService, $ionicLoading, $cordovaFacebook) {
+.controller('AuthFacebookCtrl', function ($log, $scope, $state, $q, AuthFacebookUserService, $ionicLoading, $cordovaFacebook) {
 
   $log.log('Hello from your Controller: AuthFacebookCtrl in module auth:. This is your controller:', this);
 
@@ -39,7 +39,7 @@ angular.module('auth')
     getFacebookProfileInfo(authResponse)
     .then(function (profileInfo) {
       // For the purpose of this example I will store user data on local storage
-      UserService.setUser({
+      AuthFacebookUserService.setUser({
         authResponse: authResponse,
         userID: profileInfo.id,
         name: profileInfo.name,
@@ -64,13 +64,13 @@ angular.module('auth')
         $log.log('getLoginStatus', success.status);
 
         // Check if we have our user saved
-        var user = UserService.getUser('facebook');
+        var user = AuthFacebookUserService.getUser('facebook');
 
         if (!user.userID) {
           getFacebookProfileInfo(success.authResponse)
           .then(function (profileInfo) {
 	// For the purpose of this example I will store user data on local storage
-            UserService.setUser({
+            AuthFacebookUserService.setUser({
               authResponse: success.authResponse,
               userID: profileInfo.id,
               name: profileInfo.name,

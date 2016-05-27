@@ -1,0 +1,33 @@
+[{
+  "id": { "id": "1"},
+  "nome": { "value": "Fidelis Felipe Caldas Guimarães"},
+  "email":{ "value":"atosfiel@gmail.com"},
+  "telefone":{ "value":"6186075892"},
+  "cpf":{ "value":"99929830197"},
+  "dataNascimento":{ "value":"2016-05-27T15:40:53.667Z"},
+  "dataCadastro":{ "value":"2016-05-27T15:40:53.667Z"},
+  "senha":{ "value":"123456"},
+  "perfil": { "id":"user"}
+},
+{
+  "id": { "id": "2"},
+  "nome": { "value": "Raul Santos Seixas"},
+  "email":{ "value":"raul@gmail.com"},
+  "telefone":{ "value":"6186075892"},
+  "cpf":{ "value":"99929830197"},
+  "dataNascimento":{ "value":"1945-06-28T00:00:00.000Z"},
+  "dataCadastro":{ "value":"2016-05-27T15:40:53.667Z"},
+  "senha":{ "value":"123456"},
+  "perfil": { "id":"user"}
+},
+{
+  "id": { "id": "3"},
+  "nome": { "value": "Robert Nesta Marley"},
+  "email":{ "value":"bob@gmail.com"},
+  "telefone":{ "value":"6186075892"},
+  "cpf":{ "value":"99929830197"},
+  "dataNascimento":{ "value":"1945-02-06T00:00:00.000Z"},
+  "dataCadastro":{ "value":"2016-05-27T15:40:53.667Z"},
+  "senha":{ "value":"123456"},
+  "perfil": { "id":"user"}
+}]

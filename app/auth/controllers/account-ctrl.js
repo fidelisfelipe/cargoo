@@ -1,6 +1,6 @@
 'use strict';
 angular.module('auth')
-.controller('AccountCtrl', function ($log, $ionicPopup, $scope, $http) {
+.controller('AccountCtrl', function ($log, $ionicPopup, $ionicLoading, $scope, $http, UserService, $state) {
   $log.log('Hello from your Controller: AccountCtrl in module auth:. This is your controller:', this);
   this.data = {
     'title': 'Criar Conta de Acesso',
@@ -19,7 +19,7 @@ angular.module('auth')
     $log.log('account valid: ', form.$valid);
     if (form.$valid) {
       $log.log('sended account: ', this.data);
-      $scope.data = { json: JSON.stringify(this.data), dest: 'http://cep.paicon.com.br/json/72145811'};
+      $scope.data = { json: JSON.stringify(this.data), dest: 'http://cep.paicon.com.br/json/72145811', result: ''};
       // An elaborate, custom popup
       var myPopup = $ionicPopup.show({
         template: 'Rest<input type="text" ng-model="data.dest"><br/>send:<textarea ng-model="data.json"></textarea>',
@@ -46,21 +46,27 @@ angular.module('auth')
       myPopup.then(function (res) {
         var string = 'dest: ';
         string += res;
-        $ionicPopup.alert({
-          title: 'Sending for ws',
-          template: string
-        });
-        var result = $http.get('http://cep.paicon.com.br/json/72145811');
-        result.success(function (data) {
-          $ionicPopup.alert({
-            title: 'Fail',
-            template: data
+        $ionicLoading.show({
+          template: 'Sending...'
+        }).then(function () {
+          var result = UserService.createUser($scope.data);
+          result.success(function (data) {
+            $ionicLoading.hide();
+            $scope.data.result = JSON.stringify(data);
+            $ionicPopup.alert({
+              title: 'Success',
+              scope: $scope,
+              template: '<textarea ng-model="data.result"></textarea>'
+            }).then(function () {
+              $state.go('profile');
+            });
           });
-        });
-        result.error(function (results) {
-          $ionicPopup.alert({
-            title: 'Fail',
-            template: results
+          result.error(function (results) {
+            $ionicLoading.hide();
+            $ionicPopup.alert({
+              title: 'Fail',
+              template: results
+            });
           });
         });
       });
