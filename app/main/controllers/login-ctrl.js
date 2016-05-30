@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('LoginCtrl', function ($log, $state, $ionicPopup, LoginSrv) {
+.controller('LoginCtrl', function ($log, $state, $ionicPopup, $scope, LoginSrv) {
   var login = this;
   login.data = {};
   $log.log('Hello from your Controller: LoginCtrl in module main:. This is your controller:', this);

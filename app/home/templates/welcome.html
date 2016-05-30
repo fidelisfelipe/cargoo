@@ -1,7 +1,7 @@
 <ion-view view-title="Welcome">
   <ion-content>
     <!-- content goes here -->
-        <h2>Hi Fidelis</h2>
-        <p>Work more...</p>
+        <h2>Hi {{home.user.nome.value}}</h2>
+        <button ng-click="home.current()">get current user</button>
   </ion-content>
 </ion-view>

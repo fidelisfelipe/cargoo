@@ -1,71 +1,91 @@
 'use strict';
 angular.module('user')
-.service('UserService', function ($log, $http) {
+.service('UserService', function ($log, $http, $state, $ionicHistory) {
 
   $log.log('Hello from your Service: User in module user');
+  var exist = false;
+  var isCreate = false;
+  var user = {};
+  var existUser = function (newUser) {
+    var response = $http.get('/data/emails.json');
 
+    response.success(function (data) {
+      $log.log('check user exist: ', newUser.email.value);
+
+      for (var i = 0, len = data.emails.length; i < len; i++)
+      {
+        $log.log('checking: ' + data.emails[i].toUpperCase() + ' === ' + newUser.email.value.toUpperCase(), data.emails[i].toUpperCase() === newUser.email.value.toUpperCase());
+        exist = data.emails[i].toUpperCase() === newUser.email.value.toUpperCase();
+
+        if (exist) {
+          break;
+        }
+      }
+
+    }).error(function (data) {
+      $log.log('check user exist fail', data);
+    });
+    return exist;
+  };
   var createUser = function (newUser) {
-    $log.log('create user...', JSON.stringify(newUser));
+    $log.log('create user...', newUser);
+    if (exist) {
+      return false;
+    }
     var response = $http.get('/data/accountresponsecreate.json');
     response.success(function (data) {
-      $log.log('data:', JSON.stringify(data));
       var jsonResponse = data;
-      $log.log('response success...');
+      $log.log('request create success...');
       var status = parseInt(jsonResponse.response.status);
+
       switch (status) {
         case 201:
           $log.log('201 - Success create user!');
+          user = jsonResponse.response.user;
+          isCreate = true;
           break;
 
         case 412:
           $log.log('412 - Precondition fail!');
+
           break;
 
         case 500:
           $log.log('500 - Server error!');
+
           break;
 
         default:
           $log.log('Status not defined: ', status);
+
       }
 
     });
     response.error(function (data) {
       $log.log('response error...', data);
-/*      var jsonResponse = JSON.parse(data);
-      var status = jsonResponse.response.status;
-      switch (status) {
-        case 404:
-          $log.log('404 - Not found!');
-          return false;
-
-        case 403:
-          $log.log('403 - Forbidden!');
-          return false;
-
-        case 500:
-          $log.log('500 - Server error!');
-          return false;
-
-        case 400:
-          $log.log('400 - Bad request!');
-          return false;
-
-        default:
-          $log.log('Status not defined: ', status);
-          return false;
-      }
-*/
+      isCreate = false;
     });
-
-    return response;
+    return isCreate;
   };
 
   var getUser = function () {
     $log.log('get user...');
+    return user;
+  };
+  var logout = function () {
+    $log.log('logout user...');
+    user = {};
+    $ionicHistory.clearHistory();
+    $ionicHistory.clearCache();
+    $ionicHistory.nextViewOptions({
+      disableBack: true
+    });
+    $state.go('entrar');
   };
   return {
+    existUser: existUser,
     createUser: createUser,
-    getUser: getUser
+    getUser: getUser,
+    logout: logout
   };
 });

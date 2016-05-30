@@ -10,10 +10,20 @@ angular.module('user', [
   // ROUTING with ui.router
   $stateProvider
     // this state is placed in the <ion-nav-view> in the index.html
-    .state('profile', {
-      url: '/profile',
-      template: '<ion-view view-title="Profile">Account Create Success</ion-view>',
-      // templateUrl: 'user/templates/<someTemplate>.html',
-      // controller: 'SomeCtrl as ctrl'
+    .state('user', {
+      url: '/user/welcome',
+      abstract: true,
+      templateUrl: 'user/templates/menu.html',
+      controller: 'UserMenuCtrl as menu'
+    })
+    // this state is placed in the <ion-nav-view> in the index.html
+    .state('user.profile', {
+      url: '/user/profile',
+      views: {
+        'pageContent': {
+          templateUrl: 'user/templates/profile.html',
+          controller: 'UserCtrl as user'
+        }
+      }
     });
 });

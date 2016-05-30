@@ -1,7 +1,9 @@
 'use strict';
 angular.module('auth')
-.controller('AccountCtrl', function ($log, $ionicPopup, $ionicLoading, $scope, $http, UserService, $state) {
+.controller('AccountCtrl', function ($log, $ionicPopup, $ionicLoading, $scope, $http, $state) {
   $log.log('Hello from your Controller: AccountCtrl in module auth:. This is your controller:', this);
+  var auth = this;
+
   this.data = {
     'title': 'Criar Conta de Acesso',
     'nome': {placeholder: 'Seu Nome Completo', title: 'Nome Completo', value: null},
@@ -13,62 +15,88 @@ angular.module('auth')
     'btnCriar': { title: 'Create Account' },
     'dest': null
   };
+  var exist = false;
+  var create = false;
 
   this.account = function (form) {
     $log.log('new account submitted');
     $log.log('account valid: ', form.$valid);
     if (form.$valid) {
-      $log.log('sended account: ', this.data);
-      $scope.data = { json: JSON.stringify(this.data), dest: 'http://cep.paicon.com.br/json/72145811', result: ''};
-      // An elaborate, custom popup
-      var myPopup = $ionicPopup.show({
-        template: 'Rest<input type="text" ng-model="data.dest"><br/>send:<textarea ng-model="data.json"></textarea>',
-        title: 'DEST WS',
-        subTitle: 'Please define url rest',
-        scope: $scope,
-        buttons: [
-          { text: 'Cancel' },
-          {
-            text: '<b>Send</b>',
-            type: 'button-positive',
-            onTap: function (e) {
-              if (!$scope.data.dest) {
-                //don't allow the user to close unless he enters dest ws
-                e.preventDefault();
-              } else {
-                $log.log('sending...');
-                return $scope.data.dest;
+      $log.log('sended account: ', auth.data);
+      $ionicLoading.show({
+        template: 'Sending...'
+      }).then(function () {
+//verifica se usuario existe
+        $http.get('/data/emails.json')
+          .success(function (data) {
+            $log.log('check user exist: ', auth.data.email.value);
+
+            for (var i = 0, len = data.emails.length; i < len; i++)
+            {
+
+              exist = data.emails[i].toUpperCase() === auth.data.email.value.toUpperCase();
+              $log.log('checking: ', exist);
+              if (exist) {
+                break;
               }
             }
-          },
-        ]
-      });
-      myPopup.then(function (res) {
-        var string = 'dest: ';
-        string += res;
-        $ionicLoading.show({
-          template: 'Sending...'
-        }).then(function () {
-          var result = UserService.createUser($scope.data);
-          result.success(function (data) {
-            $ionicLoading.hide();
-            $scope.data.result = JSON.stringify(data);
-            $ionicPopup.alert({
-              title: 'Success',
-              scope: $scope,
-              template: '<textarea ng-model="data.result"></textarea>'
-            }).then(function () {
-              $state.go('profile');
-            });
+
+          }).error(function (data) {
+            $log.log('check user exist fail', data);
           });
-          result.error(function (results) {
-            $ionicLoading.hide();
-            $ionicPopup.alert({
-              title: 'Fail',
-              template: results
+
+        if (!exist) {
+          $log.log('init create user...');
+          $http.get('/data/accountresponsecreate.json')
+            .success(function (data) {
+              var jsonResponse = data;
+              $log.log('request create success...');
+              var status = parseInt(jsonResponse.response.status);
+
+              switch (status) {
+                case 201:
+                  $log.log('201 - Success create user!');
+
+                  create = true;
+                  break;
+
+                case 412:
+                  $log.log('412 - Precondition fail!');
+
+                  break;
+
+                case 500:
+                  $log.log('500 - Server error!');
+
+                  break;
+
+                default:
+                  $log.log('Status not defined: ', status);
+
+              }
+
+            })
+            .error(function (data) {
+              $log.log('response error...', data);
             });
+
+        }
+        if (create) {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: 'User Create Success!',
+            template: 'Please check your email for validate account'
+          }).then(function () {
+            $state.go('entrar');
           });
-        });
+
+        } else {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: 'User Exists',
+            template: 'Please check your email or cpf account'
+          });
+        }
       });
     }
   };
