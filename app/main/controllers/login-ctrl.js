@@ -12,7 +12,6 @@ angular.module('main')
       LoginSrv.loginUser(login.data.email, login.data.password).success(function (data) {
         $log.log('success login:', data);
         $state.go('home.welcome');
-        login.data = {};
       }).error(function (data) {
         $log.log('error login:', data);
         $ionicPopup.alert({

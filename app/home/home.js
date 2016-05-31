@@ -3,6 +3,7 @@ angular.module('home', [
   'ionic',
   'ngCordova',
   'ui.router',
+  'ui.utils.masks',
   // TODO: load other modules selected during generation
 ])
 .config(function ($stateProvider) {

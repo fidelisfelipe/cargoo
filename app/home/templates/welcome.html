@@ -1,7 +1,44 @@
-<ion-view view-title="Welcome">
+<ion-view view-title="Profile">
   <ion-content>
     <!-- content goes here -->
-        <h2>Hi {{home.user.nome.value}}</h2>
-        <button ng-click="home.current()">get current user</button>
+<br/>
+<br/>
+<br/>
+<div class="list card">
+
+  <div class="item item-avatar">
+    <img ng-src="{{home.user.srcImg.dir}}/{{home.user.srcImg.value}}">
+	<h2 ng-bind="home.user.nome.value"></h2>
+	<p ng-bind="home.user.email.value"></p>
+	<i class="ion-android-cloud-done"></i>&nbsp;
+	<i class="ion-social-facebook"></i>&nbsp;
+	<i class="ion-social-googleplus"></i>
+	<p>
+	<label class="item item-input">
+	Data Cadastro:&nbsp;&nbsp;<input type="text" ng-model="home.user.dataCadastro.value" ui-date-mask disabled/>
+	</label>
+	</p>
+    <label class="item item-input">
+	  Data Nascimento:&nbsp;&nbsp;<input type="text" ng-model="home.user.dataNascimento.value" ui-date-mask disabled/>
+	</label>
+	<label class="item item-input">
+	Última Atualizaçao:&nbsp;&nbsp;<input type="text" ng-model="home.user.dataNascimento.value" ui-date-mask disabled/>
+	</label>
+	<label class="item item-input">
+	Telefone:&nbsp;&nbsp;<input type="text" ng-model="home.user.telefone.value" ui-br-phone-number disabled/>
+	</label>
+	<label class="item item-input">
+	CPF:&nbsp;&nbsp;<input type="text" ng-model="home.user.cpf.value" ui-br-cpf-mask disabled/>
+	</label>
+
+
+	<p>
+	Perfil:&nbsp;&nbsp;
+	<p><i class="button ion-android-send">&nbsp;&nbsp;&nbsp;&nbsp;Usuário</i></p>
+	<p><i class="button ion-android-car">&nbsp;&nbsp;&nbsp;&nbsp;Motorista</i></p>
+	</p>
+  </div>
+</div>
+		
   </ion-content>
 </ion-view>
