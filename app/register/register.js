@@ -17,7 +17,6 @@ function config ($stateProvider, $urlRouterProvider) {
 
 //remember config
 
-
 //router config
   $urlRouterProvider.otherwise('/login');
   $stateProvider
@@ -31,6 +30,12 @@ function config ($stateProvider, $urlRouterProvider) {
     url: '/login',
     controller: 'LoginCtrl as vm',
     templateUrl: 'register/templates/login.view.html'
+  })
+
+  .state('recover', {
+    url: '/recover',
+    controller: 'RecoverCtrl as vm',
+    templateUrl: 'register/templates/recover.view.html'
   })
 
   .state('register', {
@@ -54,7 +59,7 @@ function run ($rootScope, $location, $cookieStore, $http, $log, $state) {
     $rootScope.inArray = function (item, array) {
       return (-1 === array.indexOf(item));
     };
-    var restrictedPage = $rootScope.inArray($location.path(), ['/login', '/register']);
+    var restrictedPage = $rootScope.inArray($location.path(), ['/login', '/register', '/recover']);
     $log.log('local path:', $location.path());
     var loggedIn = $rootScope.globals.currentUser;
     if (restrictedPage && !loggedIn) {

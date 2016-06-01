@@ -13,6 +13,7 @@ function AuthenticationService ($http, $cookieStore, $rootScope, $timeout, $loca
   service.Remember = Remember;
   service.Remembered = Remembered;
   service.RememberState = RememberState;
+  service.Recover = Recover;
 
   // Base64 encoding service used by AuthenticationService
   var Base64 = {
@@ -141,6 +142,26 @@ function AuthenticationService ($http, $cookieStore, $rootScope, $timeout, $loca
     }
 
   }
+
+  function Recover (username, callback) {
+    $log.log('send recover request for ', username);//TODO: not implemented
+/* Dummy authentication for testing, uses $timeout to simulate api call*/
+    $timeout(function () {
+      var response;
+      if (username !== '') {
+        response = {success: true, message: 'Sended e-mail with credentials for recover!' };
+      } else {
+        response = {success: false, message: 'Username is incorrect' };
+      }
+      callback(response);
+    }, 1000);
+/* Use this for real authentication*/
+//    $http.post('api/recover', { username: username})
+//      .success(function (response) {
+//        callback(response);
+//      });
+  }
+
   function Remember () {
     //TODO: not implemented
   }

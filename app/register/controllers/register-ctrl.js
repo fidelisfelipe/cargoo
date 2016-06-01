@@ -5,6 +5,12 @@ RegisterCtrl.$inject = ['UserService', '$location', '$rootScope', '$state', 'Fla
 function RegisterCtrl (UserService, $location, $rootScope, $state, FlashService) {
   var vm = this;
   vm.register = register;
+  vm.data = {
+    title: 'Login',
+    btnRemember: 'Remember',
+    username: {placeholder: 'User Name', title: 'User Name'},
+    password: {placeholder: 'Password', title: 'Password'}
+  };
   function register () {
     vm.dataLoading = true;
     UserService.Create(vm.user).then(function (response) {

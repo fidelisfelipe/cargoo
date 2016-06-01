@@ -8,6 +8,12 @@ function LoginCtrl ($location, $state, $log, AuthenticationService, FlashService
   vm.clear = clear;
   vm.remembered = AuthenticationService.RememberState();
   vm.data = {
+    title: 'Login',
+    btnRemember: 'Remember',
+    btnLogin: 'Login',
+    btnRegister: 'Register',
+    btnReset: 'Reset',
+    btnRecover: 'Recover',
     username: {placeholder: 'User Name', title: 'User Name'},
     password: {placeholder: 'Password', title: 'Password'}
   };
