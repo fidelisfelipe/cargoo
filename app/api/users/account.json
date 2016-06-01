@@ -1,0 +1,15 @@
+﻿{
+  "id": { "id": "1"},
+  "nome": { "value": "Fidelis Felipe Caldas Guimarães"},
+  "email":{ "value":"atosfiel@gmail.com"},
+  "telefone":{ "value":"6186075892"},
+  "cpf":{ "value":"99929830197"},
+  "dataNascimento":{ "value":"2016-05-27T15:40:53.667Z"},
+  "dataCadastro":{ "value":"2016-05-27T15:40:53.667Z"},
+  "dataAtualizacao": {"value": ""},
+  "senha":{ "value":"123456"},
+  "perfil": { "value":"user"},
+  "origin": { "value": "account"},
+  "srcImg": { "value":"profile.jpg", "dir":"img"},
+  "srcImgFull": { "value":"profile-full.jpg", "dir":"img"}
+}

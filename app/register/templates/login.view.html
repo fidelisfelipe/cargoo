@@ -1,0 +1,76 @@
+<ion-view view-title="register module">
+  <!-- do you want padding? -->
+  <ion-content class="padding">
+
+    <!-- content goes here -->
+		<h2>Login</h2>
+		<form name="form" ng-submit="vm.login()" role="form" class="formValidate" novalidate>
+			<div class="list">
+				<label class="item item-input item-floating-label" ng-class="{ 'has-error' : form.username.$dirty && form.username.$error.required}">
+				  <span class="input-label">{{vm.data.username.title}}</span>
+				  <input type="text" placeholder="{{vm.data.username.placeholder}}" name="username" id="username" ng-model="vm.username" required>
+				</label>
+				<div class="error-container" ng-show="form.username.$dirty && form.username.$error.required" ng-messages="form.username.$error">
+				  <div ng-messages-include="error-list-simple.html"></div>
+				</div>
+
+				<label class="item item-input item-floating-label" ng-class="{ 'has-error' : form.password.$dirty && form.password.$error.required}">
+				  <span class="input-label">{{vm.data.password.title}}</span>
+				  <input type="password" placeholder="{{vm.data.password.placeholder}}" name="password" id="password" ng-model="vm.password" required>
+				</label>
+				<div class="error-container" ng-show="form.password.$dirty && form.password.$error.required" ng-messages="form.password.$error">
+				  <div ng-messages-include="error-list-simple.html"></div>
+				</div>
+				
+				<div class="form-actions">
+					<button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Login</button>
+					<img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+					<a ui-sref="register" class="btn btn-link">Register</a>
+					<a ng-click="vm.clear()" class="btn btn-link">Clear</a>
+				</div>
+				<ul class="list">
+				  <li class="item item-toggle">
+					 Remember
+					 <label class="toggle toggle-positive">
+					   <input type="checkbox" ng-model="vm.remembered" ng-click="vm.remember()">
+					   <div class="track">
+						 <div class="handle"></div>
+					   </div>
+					 </label>
+				  </li>
+				</ul>
+			</div>
+		</form>
+
+  </ion-content>
+</ion-view>
+<script id="error-list-simple.html" type="text/ng-template">
+	<div class="error" ng-message="date">
+		<i class="ion-information-circled"></i> 
+		Data inválida
+	</div>
+	<div class="error" ng-message="required">
+		<i class="ion-information-circled"></i> 
+		Campo Obrigatório!
+	</div>
+	<div class="error" ng-message="minlength">
+		<i class="ion-information-circled"></i> 
+		Muito curto
+	</div>
+	<div class="error" ng-message="maxlength">
+		<i class="ion-information-circled"></i> 
+		Muito longo
+	</div>
+	<div class="error" ng-message="cpf">
+		<i class="ion-information-circled"></i> 
+		Informe CPF válido
+	</div>
+	<div class="error" ng-message="customAsyncUserExist">
+		<i class="ion-information-circled"></i> 
+		Usuário já cadastrado!
+	</div>
+	<div class="error" ng-message="customAsyncUserExistLoading">
+		<i class="ion-information-circled"></i> 
+		Verificando Usuário...
+	</div>
+</script>

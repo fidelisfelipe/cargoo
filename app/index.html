@@ -16,13 +16,15 @@
     <!-- bower:css -->
     <!-- endbower -->
     <!-- endbuild -->
-
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
     <!-- build:css main/styles/app.css -->
     <!-- inject:css -->
     <link rel="stylesheet" href="auth/styles/auth.css">
     <link rel="stylesheet" href="home/styles/home.css">
     <link rel="stylesheet" href="main/styles/form-login.css">
     <link rel="stylesheet" href="main/styles/login.css">
+    <link rel="stylesheet" href="register/styles/form-login.css">
+    <link rel="stylesheet" href="register/styles/register.css">
     <link rel="stylesheet" href="user/styles/user.css">
     <!-- endinject -->
     <!-- endbuild -->
@@ -35,6 +37,14 @@
       <ion-nav-back-button></ion-nav-back-button>
     </ion-nav-bar>
     <!-- the current view will be rendered in the <ion-nav-view> directive -->
+    <div class="jumbotron">
+        <div class="container">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
+                <div ng-view></div>
+            </div>
+        </div>
+    </div>
     <ion-nav-view></ion-nav-view>
 
     <!-- will be a 404 during development -->
@@ -55,10 +65,13 @@
     <script src="bower_components/localforage/dist/localforage.js"></script>
     <script src="bower_components/angular-messages/angular-messages.js"></script>
     <script src="bower_components/angular-input-masks/angular-input-masks-standalone.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-localforage/dist/angular-localForage.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
-	
-	<script src="bower_components/angular-i18n/angular-locale_pt-br.js"></script>
+
+    <script src="bower_components/angular-i18n/angular-locale_pt-br.js"></script>
     <!-- build:js scripts/app.js -->
     <!-- inject:js -->
     <script src="user/user.js"></script>
@@ -66,6 +79,14 @@
     <script src="user/controllers/user-menu-ctrl.js"></script>
     <script src="user/controllers/user-ctrl.js"></script>
     <script src="user/constants/user-config-const.js"></script>
+    <script src="register/register.js"></script>
+    <script src="register/services/user-service-serv.js"></script>
+    <script src="register/services/flash-serv.js"></script>
+    <script src="register/services/authentication-service-serv.js"></script>
+    <script src="register/controllers/register-ctrl.js"></script>
+    <script src="register/controllers/login-ctrl.js"></script>
+    <script src="register/controllers/home-ctrl.js"></script>
+    <script src="register/constants/register-config-const.js"></script>
     <script src="main/main.js"></script>
     <script src="main/services/login-serv.js"></script>
     <script src="main/directives/custom-async-user-exist-validator-dir.js"></script>
