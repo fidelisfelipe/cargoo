@@ -2,9 +2,9 @@
 angular.module('register')
 .factory('AuthenticationService', AuthenticationService);
 
-AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', '$localForage', '$log', 'UserService'];
+AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', '$localForage', '$log', '$q', 'UserService'];
 
-function AuthenticationService ($http, $cookieStore, $rootScope, $timeout, $localForage, $log, UserService) {
+function AuthenticationService ($http, $cookieStore, $rootScope, $timeout, $localForage, $log, $q, UserService) {
   var service = {};
 
   service.Login = Login;
@@ -134,11 +134,11 @@ function AuthenticationService ($http, $cookieStore, $rootScope, $timeout, $loca
   function Remembered (remembered) {
 
     if (remembered) {
-      $localForage.setItem('remember', true);
-      $localForage.setItem('remembered', $rootScope.globals.currentUser);
+      localStorage.remember = true;
+      localStorage.remembered = JSON.stringify($rootScope.globals.currentUser);
     } else {
-      $localForage.removeItem('remembered');
-      $localForage.setItem('remember', false);
+      localStorage.removeItem('remembered');
+      localStorage.removeItem('remember');
     }
 
   }
@@ -165,8 +165,10 @@ function AuthenticationService ($http, $cookieStore, $rootScope, $timeout, $loca
   function Remember () {
     //TODO: not implemented
   }
+
+
   function RememberState () {
-    //TODO: not implemented
-    return true;
+    return localStorage.getItem('remember');
+
   }
 }

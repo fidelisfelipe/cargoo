@@ -6,7 +6,9 @@ function LoginCtrl ($location, $state, $log, AuthenticationService, FlashService
   var vm = this;
   vm.login = login;
   vm.clear = clear;
-  vm.remembered = AuthenticationService.RememberState();
+  vm.remembered = AuthenticationService.RememberState() === 'true';
+  $log.log('vm.remembered', vm.remembered);
+  vm.changeRemember = function () { vm.remembered = !vm.remembered;};
   vm.data = {
     title: 'Login',
     btnRemember: 'Remember',
@@ -28,6 +30,7 @@ function LoginCtrl ($location, $state, $log, AuthenticationService, FlashService
       if (response.success) {
         AuthenticationService.SetCredentials(vm.username, vm.password);
         vm.dataLoading = false;
+        $log.log('vm.remembered', vm.remembered);
         AuthenticationService.Remembered(vm.remembered);
         $state.go('home');
       } else {
