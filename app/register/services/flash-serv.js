@@ -4,13 +4,14 @@ angular
   .module('register')
   .factory('FlashService', FlashService);
 
-FlashService.$inject = ['$rootScope'];
-function FlashService ($rootScope) {
+FlashService.$inject = ['$rootScope', '$ionicPopup', '$ionicLoading'];
+function FlashService ($rootScope, $ionicPopup, $ionicLoading) {
   var service = {};
 
   service.Success = Success;
   service.Error = Error;
-
+  service.Loading = Loading;
+  service.Question = Question;
   initService();
 
   return service;
@@ -33,20 +34,41 @@ function FlashService ($rootScope) {
     }
   }
 
-  function Success (message, keepAfterLocationChange) {
-    $rootScope.flash = {
-      message: message,
-      type: 'success',
-      keepAfterLocationChange: keepAfterLocationChange
-    };
+  function Success (message) {
+    $ionicPopup.alert({
+      title: 'Success',
+      template: '<center>' + message + '</center>',
+      cssClass: 'positive'
+    });
   }
 
-  function Error (message, keepAfterLocationChange) {
-    $rootScope.flash = {
-      message: message,
-      type: 'error',
-      keepAfterLocationChange: keepAfterLocationChange
-    };
+  function Loading (isLoading, message) {
+    if (isLoading) {
+      $ionicLoading.show({
+        template: '<center>' + (message ? message : 'Loading...') + '</center>'
+      });
+    } else {
+      $ionicLoading.hide();
+    }
+  }
+  function Error (message) {
+    $ionicPopup.alert({
+      title: 'Warning',
+      template: '<center>' + message + '</center>',
+      cssClass: 'assertive'
+    });
+  }
+  function Question (message, yes) {
+    var question = $ionicPopup.confirm({
+      title: 'Question',
+      template: '<center>' + message + '</center>',
+      cssClass: 'assertive'
+    });
+    question.then(function (res) {
+      if (res) {
+        yes();
+      }
+    });
   }
 }
 

@@ -2,9 +2,9 @@
 angular.module('register')
 .factory('AuthenticationService', AuthenticationService);
 
-AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', '$localForage', '$log', '$q', 'UserService'];
+AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', '$localForage', '$log', '$q', '$state', 'UserService'];
 
-function AuthenticationService ($http, $cookieStore, $rootScope, $timeout, $localForage, $log, $q, UserService) {
+function AuthenticationService ($http, $cookieStore, $rootScope, $timeout, $localForage, $log, $q, $state, UserService) {
   var service = {};
 
   service.Login = Login;
@@ -100,7 +100,7 @@ function AuthenticationService ($http, $cookieStore, $rootScope, $timeout, $loca
       UserService.GetByUsername(username)
         .then(function (user) {
           if (user !== null && user.password === password) {
-            response = {success: true};
+            response = {success: true, message: 'Welcome'};
           } else {
             response = {success: false, message: 'Username or password is incorrect' };
           }
@@ -129,6 +129,7 @@ function AuthenticationService ($http, $cookieStore, $rootScope, $timeout, $loca
     $rootScope.globals = {};
     $cookieStore.remove('globals');
     $http.defaults.headers.common.Authorization = 'Basic';
+    $state.go('login');
   }
 
   function Remembered (remembered) {

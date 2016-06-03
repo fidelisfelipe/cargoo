@@ -1,21 +1,18 @@
 <ion-view view-title="register module">
   <!-- do you want padding? -->
-  <ion-content class="padding">
-
+  <ion-content class="padding" >
     <!-- content goes here -->
-<h1>Hi {{vm.user.firstName}}!</h1>
+
 <p>You're logged in!!</p>
 <h3>All registered users:</h3>
-<ul>
-    <li ng-repeat="user in vm.allUsers">
-        {{user.username}} ({{user.firstName}} {{user.lastName}})
-        - <a href="#" ng-click="vm.deleteUser(user.id)">Delete</a>
-    </li>
-</ul>
-<p>&nbsp;</p>
-<p><a href="#/login" class="btn btn-primary">Logout</a></p>
+<div class="list list-inset">
 
-                
-
+  <div ng-repeat="user in vm.allUsers" >
+    {{user.username}} - <a href="#" ng-click="vm.deleteUser(user.id)">remove</a>
+  </div>
+</div>
+<p>
+<button class="button ion-power button-assertive" ng-click="vm.logout()"></button><h1 ng-bind="vm.user.firstName"></h1>
+</p>
   </ion-content>
 </ion-view>

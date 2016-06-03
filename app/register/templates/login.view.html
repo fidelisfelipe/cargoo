@@ -1,10 +1,11 @@
-<ion-view view-title="register module">
+<ion-view view-title="register module" >
   <!-- do you want padding? -->
-  <ion-content class="padding">
+  <ion-content class="padding" >
 
     <!-- content goes here -->
-		<h2 ng-bind="vm.data.title"></h2>
-		<form name="form" ng-submit="vm.login()" role="form" class="formValidate" novalidate>
+		
+		<form name="form" ng-submit="vm.login()" class="formValidate" novalidate>
+			<h2 ng-bind="vm.data.title"></h2>
 			<div class="list">
 				<label class="item item-input item-floating-label" ng-class="{ 'has-error' : form.username.$dirty && form.username.$error.required}">
 				  <span class="input-label">{{vm.data.username.title}}</span>
@@ -22,12 +23,11 @@
 				  <div ng-messages-include="error-list-simple.html"></div>
 				</div>
 				
-				<div class="form-actions">
-					<button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Login</button>
-					<img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-					<a ui-sref="register" class="btn btn-primary">{{vm.data.btnRegister}}</a>
-					<a ui-sref="recover" class="btn btn-primary">{{vm.data.btnRecover}}</a>
-					<a ng-click="vm.clear()" class="btn btn-primary">{{vm.data.btnReset}}</a>
+				<div class="button-bar">
+					<button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="button button-positive">Login</button>
+					<a ui-sref="register" class="button button-positive">{{vm.data.btnRegister}}</a>
+					<a ui-sref="recover" class="button button-positive">{{vm.data.btnRecover}}</a>
+					<a ng-click="vm.clear()" class="button button-positive">{{vm.data.btnReset}}</a>
 				</div>
 				<ul class="list">
 				  <li class="item item-toggle">
