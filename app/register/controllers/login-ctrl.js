@@ -22,7 +22,7 @@ function LoginCtrl ($location, $state, $log, AuthenticationService, FlashService
   };
   (function initController () {
     AuthenticationService.ClearCredentials();
-    AuthenticationService.Remember();
+    vm.username = AuthenticationService.Remember();
   })();
 
   function login () {

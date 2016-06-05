@@ -42,6 +42,7 @@ function HomeCtrl ($rootScope, $log, UserService, AuthenticationService, FlashSe
   function logout () {
     $log.log('logout...');
     FlashService.Question('Logout now?', setLogout);
+
     //AuthenticationService.ClearCredentials();
     //$state.go('home');
   }

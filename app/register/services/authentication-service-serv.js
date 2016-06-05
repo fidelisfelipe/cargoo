@@ -164,7 +164,7 @@ function AuthenticationService ($http, $cookieStore, $rootScope, $timeout, $loca
   }
 
   function Remember () {
-    //TODO: not implemented
+    return JSON.parse(localStorage.getItem('remembered')).username;
   }
 
 
