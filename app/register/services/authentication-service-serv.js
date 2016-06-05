@@ -164,7 +164,8 @@ function AuthenticationService ($http, $cookieStore, $rootScope, $timeout, $loca
   }
 
   function Remember () {
-    return JSON.parse(localStorage.getItem('remembered')).username;
+    var user = JSON.parse(localStorage.getItem('remembered'));
+    return (user !== null ? user.username : '');
   }
 
 
