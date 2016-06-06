@@ -2,8 +2,7 @@
 angular.module('cargoo', [
   // load your modules here
   'register',
-//  'main',
-//  'home',
+  'welcome',
 //  'auth',
 //  'user',  // starting with the main module
 ]);

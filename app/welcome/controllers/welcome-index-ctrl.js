@@ -1,8 +1,8 @@
 'use strict';
-angular.module('register')
-.controller('HomeCtrl', HomeCtrl);
-HomeCtrl.$inject = ['$rootScope', '$log', 'UserService', 'AuthenticationService', 'FlashService'];
-function HomeCtrl ($rootScope, $log, UserService, AuthenticationService, FlashService) {
+angular.module('welcome')
+.controller('WelcomeIndexCtrl', WelcomeIndexCtrl);
+WelcomeIndexCtrl.$inject = ['$rootScope', '$log', 'UserService', 'AuthenticationService', 'FlashService'];
+function WelcomeIndexCtrl ($rootScope, $log, UserService, AuthenticationService, FlashService) {
 
   var vm = this;
 

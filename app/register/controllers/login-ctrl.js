@@ -33,7 +33,7 @@ function LoginCtrl ($location, $state, $log, AuthenticationService, FlashService
         $log.log('vm.remembered', vm.remembered);
         AuthenticationService.Remembered(vm.remembered);
         FlashService.Success(response.message);
-        $state.go('home');
+        $state.go('welcome.index');
       } else {
         FlashService.Error(response.message);
       }

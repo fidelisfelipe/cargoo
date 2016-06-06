@@ -1,0 +1,19 @@
+<ion-view view-title="welcome module">
+  <!-- do you want padding? -->
+  <ion-content class="padding">
+
+    <!-- content goes here -->
+<p>You're logged in!!</p>
+<h3>All registered users:</h3>
+<div class="list list-inset">
+
+  <div ng-repeat="user in vm.allUsers" >
+    {{user.username}} - <a href="#" ng-click="vm.deleteUser(user.id)">remove</a>
+  </div>
+</div>
+<p>
+<button class="button ion-power button-assertive" ng-click="vm.logout()"></button><h1 ng-bind="vm.user.firstName"></h1>
+</p>
+
+  </ion-content>
+</ion-view>

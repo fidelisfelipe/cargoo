@@ -5,7 +5,7 @@
 
     <!-- header bar -->
     <!-- the nav bar will be updated as we navigate between views -->
-    <ion-nav-bar class="bar-positive">
+    <ion-nav-bar class="bar-balanced">
       <!-- back button, shown if applicable -->
       <ion-nav-back-button>
       </ion-nav-back-button>
@@ -25,18 +25,21 @@
   <ion-side-menu side="left">
 
     <!-- menu header -->
-    <ion-header-bar class="bar-positive">
-      <h1 class="title">Welcome</h1>
+    <ion-header-bar class="bar-balanced">
+      <h1 class="title">Nav</h1>
     </ion-header-bar>
 
     <!-- menu content -->
     <ion-content>
       <ion-list>
-        <ion-item menu-close ui-sref="home.welcome">
-          Welcome
+        <ion-item menu-close ui-sref="welcome.index">
+          Index
         </ion-item>
-		<ion-item menu-close ng-controller="MainCtrl as main" ng-click="main.logout()">
-          Logout
+        <ion-item menu-close ui-sref="welcome.list">
+          List
+        </ion-item>
+        <ion-item menu-close ui-sref="welcome.debug">
+          Debug
         </ion-item>
       </ion-list>
     </ion-content>

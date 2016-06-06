@@ -1,8 +1,8 @@
 'use strict';
-angular.module('home')
-.service('Home', function ($log, $timeout) {
+angular.module('welcome')
+.service('Welcome', function ($log, $timeout) {
 
-  $log.log('Hello from your Service: Home in module home');
+  $log.log('Hello from your Service: Welcome in module welcome');
 
   // some initial data
   this.someData = {

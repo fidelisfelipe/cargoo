@@ -1,28 +1,28 @@
 'use strict';
 
-describe('module: home, service: Home', function () {
+describe('module: welcome, service: Welcome', function () {
 
   // load the service's module
-  beforeEach(module('home'));
+  beforeEach(module('welcome'));
   // load all the templates to prevent unexpected $http requests from ui-router
   beforeEach(module('ngHtml2Js'));
 
   // instantiate service
-  var Home;
+  var Welcome;
   var $timeout;
-  beforeEach(inject(function (_Home_, _$timeout_) {
-    Home = _Home_;
+  beforeEach(inject(function (_Welcome_, _$timeout_) {
+    Welcome = _Welcome_;
     $timeout = _$timeout_;
   }));
 
   describe('.changeBriefly()', function () {
     beforeEach(function () {
-      Home.changeBriefly();
+      Welcome.changeBriefly();
     });
     it('should briefly change', function () {
-      expect(Home.someData.binding).toEqual('Yeah this was changed');
+      expect(Welcome.someData.binding).toEqual('Yeah this was changed');
       $timeout.flush();
-      expect(Home.someData.binding).toEqual('Yes! Got that databinding working');
+      expect(Welcome.someData.binding).toEqual('Yes! Got that databinding working');
     });
   });
 

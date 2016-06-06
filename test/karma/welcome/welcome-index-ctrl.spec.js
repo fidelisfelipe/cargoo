@@ -1,20 +1,20 @@
 'use strict';
 
-describe('module: home, controller: HomeCtrl', function () {
+describe('module: welcome, controller: WelcomeIndexCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('home'));
+  beforeEach(module('welcome'));
   // load all the templates to prevent unexpected $http requests from ui-router
   beforeEach(module('ngHtml2Js'));
 
   // instantiate controller
-  var HomeCtrl;
+  var IndexCtrl;
   beforeEach(inject(function ($controller) {
-    HomeCtrl = $controller('HomeCtrl');
+    IndexCtrl = $controller('WelcomeIndexCtrl');
   }));
 
   it('should do something', function () {
-    expect(!!HomeCtrl).toBe(true);
+    expect(!!IndexCtrl).toBe(true);
   });
 
 });
