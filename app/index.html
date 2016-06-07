@@ -20,6 +20,7 @@
     <!-- build:css main/styles/app.css -->
     <!-- inject:css -->
     <link rel="stylesheet" href="auth/styles/auth.css">
+    <link rel="stylesheet" href="auth-social-backand/styles/auth-social-backand.css">
     <link rel="stylesheet" href="main/styles/form-login.css">
     <link rel="stylesheet" href="main/styles/login.css">
     <link rel="stylesheet" href="register/styles/form-login.css">
@@ -61,6 +62,7 @@
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-localforage/dist/angular-localForage.js"></script>
+    <script src="bower_components/angularbknd-sdk/dist/backand.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -93,6 +95,12 @@
     <script src="main/controllers/main-ctrl.js"></script>
     <script src="main/controllers/login-ctrl.js"></script>
     <script src="main/constants/config-const.js"></script>
+    <script src="auth-social-backand/auth-social-backand.js"></script>
+    <script src="auth-social-backand/services/flash-serv.js"></script>
+    <script src="auth-social-backand/services/auth-social-backand-serv.js"></script>
+    <script src="auth-social-backand/services/api-interceptor-serv.js"></script>
+    <script src="auth-social-backand/controllers/auth-social-backand-ctrl.js"></script>
+    <script src="auth-social-backand/constants/auth-social-backand-config-const.js"></script>
     <script src="auth/auth.js"></script>
     <script src="auth/services/auth-facebook-user-serv.js"></script>
     <script src="auth/controllers/auth-facebook-ctrl.js"></script>

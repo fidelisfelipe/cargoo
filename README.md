@@ -32,6 +32,7 @@ Added mock : see [https://docs.angularjs.org/api/ngMock] [bower install angular-
 Added cookie: see [https://github.com/angular/bower-angular-cookies] [bower install angular-cookies --save]
 Added route: see [https://docs.angularjs.org/api/ngRoute] [bower install angular-route --save]
 Added localForage: see [https://github.com/ocombe/angular-localForage] and [https://github.com/mozilla/localForage#driver-selection-ie-forcing-localstorage] [bower install angular-localforage --save]
+Added backand: see [https://www.backand.com] [bower install angularbknd-sdk --save]
 
 
 

@@ -18,15 +18,9 @@ function config ($stateProvider, $urlRouterProvider) {
 //remember config
 
 //router config
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/index');
 
   $stateProvider
-  .state('home', {
-    url: '/',
-    cache: false,
-    controller: 'HomeCtrl as vm',
-    templateUrl: 'register/templates/home.view.html'
-  })
 
   .state('login', {
     url: '/login',

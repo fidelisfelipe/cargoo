@@ -1,0 +1,23 @@
+<ion-view view-title="login backand module">
+  <!-- do you want padding? -->
+  <ion-content class="padding">
+	<h1 ng-show="vm.isAuthorized"><button class="button button-assertive ion-power" ng-click="vm.signout()" type="button" ng-show="vm.isAuthorized"> - {{vm.username}}</h1>
+    <!-- content goes here -->
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<div class="button-bar" ng-hide="vm.isAuthorized">
+		<button class="button button-positive icon-left ion-social-facebook" ng-click="vm.socialSignin('facebook')" type="button">
+			Facebook
+		</button>
+		<button class="button button-dark icon-left ion-social-facebook ion-social-github" ng-click="vm.socialSignin('github')" type="button">
+			Github
+		</button>
+		<button class="button button-assertive icon-left ion-social-googleplus" ng-click="vm.socialSignin('google')" type="button">
+			Google+
+		</button>
+	</div>
+  </ion-content>
+</ion-view>
