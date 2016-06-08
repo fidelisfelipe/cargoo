@@ -9,5 +9,12 @@ angular.module('authSocialBackand')
   service.signout = function () {
     return Backand.signout();
   };
+  service.signin = function (email, password) {
+  //call Backand for sign in
+    return Backand.signin(email, password);
+  };
+  service.signup = function (firstName, lastName, email, password, confirmPassword) {
+    return Backand.signup(firstName, lastName, email, password, confirmPassword);
+  };
 
 });

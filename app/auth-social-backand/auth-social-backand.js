@@ -8,13 +8,18 @@ angular.module('authSocialBackand', [
   BackandProvider.setAppName('cargoo');
   BackandProvider.setSignUpToken('1902749c-e19e-4044-90db-ce2e84832ca6');
 
-  $urlRouterProvider.otherwise('/auth/social/backand');
+  $urlRouterProvider.otherwise('/auth/social/backand/login');
   // ROUTING with ui.router
   $stateProvider
     // this state is placed in the <ion-nav-view> in the index.html
-    .state('authSocialBackand', {
-      url: '/auth/social/backand',
+    .state('authSocialBackandLogin', {
+      url: '/auth/social/backand/login',
       templateUrl: 'auth-social-backand/templates/login.view.html',
+      controller: 'AuthSocialBackandCtrl as vm'
+    })
+    .state('authSocialBackandSignUp', {
+      url: '/auth/social/backand/sigup',
+      templateUrl: 'auth-social-backand/templates/signUp.view.html',
       controller: 'AuthSocialBackandCtrl as vm'
     });
   $httpProvider.interceptors.push('APIInterceptor');
@@ -42,7 +47,8 @@ angular.module('authSocialBackand', [
 
   function unauthorized () {
     $log.log('user is unauthorized, sending to login');
-    $state.go('authSocialBackand');
+    $rootScope.isAuthorized = false;
+    $state.go('authSocialBackandLogin');
   }
 
   function signout () {
@@ -55,20 +61,18 @@ angular.module('authSocialBackand', [
 
   $rootScope.$on('authorized', function () {
     Backand.getUserDetails().then(function (data) {
-      $rootScope.globals = {
-        currentUser: {
-          username: data.username
-        }
-      };
+      $rootScope.isAuthorized = true;
+      $rootScope.username = data.username;
+      $rootScope.firstName = data.firstName;
     });
 
   });
 
   $rootScope.$on('$stateChangeSuccess', function (event, toState) {
-    if (toState.name === 'authSocialBackand') {
+    if (toState.name === 'authSocialBackandLogin' && !$rootScope.isAuthorized) {
       signout();
     }
-    else if (toState.name !== 'authSocialBackand' && Backand.getToken() === undefined) {
+    else if (toState.name !== 'authSocialBackandLogin' && !$rootScope.isAuthorized && Backand.getToken() === undefined) {
       unauthorized();
     }
   });

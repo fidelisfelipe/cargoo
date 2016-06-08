@@ -1,14 +1,16 @@
 'use strict';
 angular.module('authSocialBackand')
-.controller('AuthSocialBackandCtrl', function ($log, $state, $rootScope, $timeout, FlashService, Backand, AuthSocialBackandService) {
+.controller('AuthSocialBackandCtrl', function ($log, $state, $scope, $rootScope, $timeout, FlashService, Backand, AuthSocialBackandService) {
   var vm = this;
   vm.socialSignin = socialSignIn;
   vm.signout = signout;
+  vm.signin = signin;
+  vm.signUpGo = function () {$state.go('authSocialBackandSignUp');};
+  vm.signUp = signUp;
+  $scope.$on('$destroy', function () {/**not destroy scope?**/});
+  $scope.$on('$viewContentLoaded', function () {/**not destroy scope?**/});
   $log.log('Hello from your Controller: AuthSocialBackandCtrl in module authSocialBackand:. This is your controller:', this);
-  (function initController () {
-    vm.username = '';
-    vm.error = '';
-  })();
+
   vm.onValidLogin = function () {
     onLogin();
     vm.username = Backand.getUsername();
@@ -41,14 +43,41 @@ angular.module('authSocialBackand')
         });
     });
   }
+  function signin () {
+    AuthSocialBackandService.signin(vm.email, vm.password).then(function (data) {
+      onLogin();
+      $log.log('login on: ' + data.username);
+    }, function (error) {
+      FlashService.Error(error.error_description);
+      $log.log('sigin error', error);
+    });
+  }
+  function signUp () {
+    FlashService.Loading(true);
+    AuthSocialBackandService.signup(vm.firstName, vm.lastName, vm.email, vm.password, vm.again)
+        .then(function (response) {
+          $log.log('success signup:', response);
+          FlashService.Success('Sign Up Successfull!');
+          $state.go('authSocialBackandLogin');
+        }, function (reason) {
+          $log.log('sigup error: ', reason.data);
+          FlashService.Error(reason.data.error_description);
+          //TODO: 417 - Critcal Exception (not exist error_description, sigup_error: 'An unexpected signup  exception occured') with enable e-mail confirm
+        });
+    FlashService.Loading(false);
+  }
   $rootScope.$on('authorized', function () {
-    vm.isAuthorized = true;
-    vm.username = $rootScope.globals.currentUser.username;
+    $rootScope.isAuthorized = true;
+    Backand.getUserDetails().then(function (data) {
+      vm.username = data.username;
+      vm.firstName = data.firstName;
+    });
   });
 
   $rootScope.$on('logout', function () {
     vm.username = '';
     vm.isAuthorized = false;
+    $rootScope.isAuthorized = false;
     $state.go($state.current);
   });
 });

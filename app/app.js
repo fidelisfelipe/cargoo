@@ -8,7 +8,7 @@ angular.module('cargoo', [
   'ui.utils.masks',
   'LocalForageModule',
   'ui.router',
-  'register',
+//  'register',
   'welcome',
   'authSocialBackand',
 //  'user',  // starting with the main module
