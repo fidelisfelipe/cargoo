@@ -7,6 +7,32 @@
 	</h2>
     <!-- content goes here -->
 	<p>&nbsp;</p>
+
+	<form ng-submit="vm.signin()" ng-show="isAuthorized">
+	<h3>Account</h3>
+		<div class="list">
+			<label class="item item-input"><input id="userId" name="userId" type="text" ng-model="userId" ng-disabled="true"></label>
+			<label class="item item-input">
+				<input id="email" name="email" type="email" placeholder="Your email" ng-model="username" ng-disabled="true">
+			</label>
+			<label class="item item-input">
+				<input id="firstName" name="firstName" type="text" placeholder="First Name" ng-model="firstName">
+			</label>
+			<label class="item item-input">
+				<input id="lastName" name="lastName" type="text" placeholder="Last Name" ng-model="lastName">
+			</label>
+		</div>
+		<div class="button-bar" >
+			<button class="button button-block button-positive" type="submit">
+				Update Account
+			</button>
+			<a class="button button-block button-assertive" ng-click="vm.updatePasswordGo()">
+				Password Update
+			</a>
+		</div>
+	</form>
+	
+	
 	<form ng-submit="vm.signin()" ng-hide="isAuthorized">
 		<div class="list">
 			<label class="item item-input">

@@ -8,6 +8,8 @@ angular.module('authSocialBackand', [
   BackandProvider.setAppName('cargoo');
   BackandProvider.setSignUpToken('1902749c-e19e-4044-90db-ce2e84832ca6');
 
+  $httpProvider.interceptors.push('APIInterceptor');
+
   $urlRouterProvider.otherwise('/auth/social/backand/login');
   // ROUTING with ui.router
   $stateProvider
@@ -21,8 +23,13 @@ angular.module('authSocialBackand', [
       url: '/auth/social/backand/sigup',
       templateUrl: 'auth-social-backand/templates/signUp.view.html',
       controller: 'AuthSocialBackandCtrl as vm'
+    })
+    .state('authSocialBackandUpdatePassword', {
+      url: '/auth/social/backand/update/password',
+      templateUrl: 'auth-social-backand/templates/updatePassword.view.html',
+      controller: 'AuthSocialBackandCtrl as vm'
     });
-  $httpProvider.interceptors.push('APIInterceptor');
+
 
 }).run(function ($ionicPlatform, $rootScope, $state, $log, AuthSocialBackandService, Backand) {
 
@@ -45,35 +52,11 @@ angular.module('authSocialBackand', [
     Backand.setRunSignupAfterErrorInSigninSocial(true);
   });
 
-  function unauthorized () {
-    $log.log('user is unauthorized, sending to login');
-    $rootScope.isAuthorized = false;
-    $state.go('authSocialBackandLogin');
-  }
+  $rootScope.$on('logout', AuthSocialBackandService.signout);
 
-  function signout () {
-    AuthSocialBackandService.signout();
-  }
+  $rootScope.$on('unauthorized', AuthSocialBackandService.unauthorized);
 
-  $rootScope.$on('unauthorized', function () {
-    unauthorized();
-  });
+  $rootScope.$on('authorized', AuthSocialBackandService.onAuthorized());
 
-  $rootScope.$on('authorized', function () {
-    Backand.getUserDetails().then(function (data) {
-      $rootScope.isAuthorized = true;
-      $rootScope.username = data.username;
-      $rootScope.firstName = data.firstName;
-    });
-
-  });
-
-  $rootScope.$on('$stateChangeSuccess', function (event, toState) {
-    if (toState.name === 'authSocialBackandLogin' && !$rootScope.isAuthorized) {
-      signout();
-    }
-    else if (toState.name !== 'authSocialBackandLogin' && !$rootScope.isAuthorized && Backand.getToken() === undefined) {
-      unauthorized();
-    }
-  });
+  $rootScope.$on('$stateChangeSuccess', AuthSocialBackandService.onChangeSuccess);
 });
