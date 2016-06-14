@@ -1,61 +1,103 @@
 'use strict';
 angular.module('authSocialBackand')
-.service('AuthSocialBackandService', function ($log, $state, $rootScope, Backand) {
-  var service = this;
+.service('AuthSocialBackandService', function ($log, $state, $rootScope, $http, Utils, FlashService, Backand) {
   $log.log('Hello from your Service: AuthSocialBackandService in module authSocialBackand');
-  service.socialSignIn = function (provider) {
+  var service = this;
+  service.signin = signin;
+  service.socialSignIn = socialSignIn;
+  service.signup = signup;
+  service.signout = signout;
+
+  service.unauthorized = unauthorized;
+  service.onAuthorized = onAuthorized;
+  service.onChangeSuccess = onChangeSuccess;
+  service.updatePassword = updatePassword;
+  service.updateAccount = updateAccount;
+
+  //socialSignIn
+  function socialSignIn (provider) {
     return Backand.socialSignIn(provider);
-  };
-  service.signout = function () {
+  }
+  //signout
+  function signout () {
     $log.log('signout...');
-    $rootScope.isAuthorized = false;
-    $rootScope.username = '';
-    $rootScope.firstName = '';
-    $rootScope.lastName = '';
-    $rootScope.userId = '';
+    Utils.setUserCurrentBlank();
     $state.go($state.current);
     return Backand.signout();
-  };
-  service.unauthorized = function () {
+  }
+  //unauthorized
+  function unauthorized () {
     $log.log('unauthorized...');
-    $rootScope.isAuthorized = false;
+    Utils.setNotAuthorized;
     $state.go($state.current);
-  };
-  service.signin = function (email, password) {
+  }
+  //signin
+  function signin (email, password, callback) {
     $log.log('signin...');
-    return Backand.signin(email, password);
-  };
-  service.signup = function (firstName, lastName, email, password, confirmPassword) {
+    return Backand.signin(email, password)
+      .then(function (response) {
+        if (response.error && response.error_description) {
+          FlashService.Error(response.error_description);
+        } else {
+          onAuthorized(callback);
+        }
+      }, function (response) {
+        FlashService.Error(response);
+      });
+  }
+  //signup
+  function signup (firstName, lastName, email, password, confirmPassword) {
     $log.log('signup...');
     return Backand.signup(firstName, lastName, email, password, confirmPassword);
-  };
-  service.onAuthorized = function () {
+  }
+  //onAuthorized
+  function onAuthorized (callback) {
     $log.log('onAuthorized...');
     Backand.getUserDetails().then(function (data) {
-      if (data && data.username !== undefined) {
-        $rootScope.isAuthorized = true;
-        $rootScope.username = data.username;
-        $rootScope.firstName = data.firstName;
-        $rootScope.lastName = data.lastName;
-        $rootScope.userId = data.userId;
+      if (data && data.username !== undefined && data.userId) {
+        Utils.setUserCurrentBlank();
+        Utils.setUserCurrent(data);
+        Utils.setIsAuthorized();
+        Utils.refreshUserCurrentRoot();
+        FlashService.Success('Welcome');
+        callback();
       } else {
         $log.log('undefined user current...');
       }
     });
-
-  };
-  service.onChangeSuccess = function (event, toState) {
+  }
+  //onChangeSuccess
+  function onChangeSuccess (event, toState) {
     $log.log('stateChangeSuccess...');
-    if (toState.name === 'authSocialBackandLogin' && !$rootScope.isAuthorized) {
+    if (toState.name === 'authSocialBackandLogin' && !Utils.isAuthorized) {
       service.signout();
       $state.go('authSocialBackandLogin');
     }
-    else if (toState.name !== 'authSocialBackandLogin' && !$rootScope.isAuthorized && Backand.getToken() === undefined) {
+    else if (toState.name !== 'authSocialBackandLogin' && !Utils.isAuthorized && Backand.getToken() === undefined) {
       service.unauthorized();
       $state.go('authSocialBackandLogin');
     }
-  };
-  service.updatePassword = function (passwordCurrent, passwordNew) {
+  }
+  //updatePassword
+  function updatePassword (passwordCurrent, passwordNew) {
     return Backand.changePassword(passwordCurrent, passwordNew);
-  };
+  }
+  //updateAccount
+  function updateAccount (firstName, lastName, id) {
+    var returnObject = true;
+    var name = 'users';
+    var userData = {
+      'grant_type': 'text',
+      'firstName': firstName,
+      'lastName': lastName
+    };
+    return $http({
+      method: 'PUT',
+      url: Backand.getApiUrl() + '/1/objects/' + name + '/' + id,
+      data: userData,
+      params: {
+        returnObject: returnObject
+      }
+    });
+  }
 });

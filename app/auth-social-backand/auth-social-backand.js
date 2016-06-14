@@ -17,19 +17,27 @@ angular.module('authSocialBackand', [
     .state('authSocialBackandLogin', {
       url: '/auth/social/backand/login',
       templateUrl: 'auth-social-backand/templates/login.view.html',
+      cache: false,
       controller: 'AuthSocialBackandCtrl as vm'
     })
     .state('authSocialBackandSignUp', {
       url: '/auth/social/backand/sigup',
       templateUrl: 'auth-social-backand/templates/signUp.view.html',
+      cache: false,
       controller: 'AuthSocialBackandCtrl as vm'
     })
     .state('authSocialBackandUpdatePassword', {
       url: '/auth/social/backand/update/password',
       templateUrl: 'auth-social-backand/templates/updatePassword.view.html',
+      cache: false,
+      controller: 'AuthSocialBackandCtrl as vm'
+    })
+    .state('authSocialBackandUpdateAccount', {
+      url: '/auth/social/backand/update/account',
+      templateUrl: 'auth-social-backand/templates/updateAccount.view.html',
+      cache: false,
       controller: 'AuthSocialBackandCtrl as vm'
     });
-
 
 }).run(function ($ionicPlatform, $rootScope, $state, $log, AuthSocialBackandService, Backand) {
 
@@ -53,10 +61,9 @@ angular.module('authSocialBackand', [
   });
 
   $rootScope.$on('logout', AuthSocialBackandService.signout);
-
   $rootScope.$on('unauthorized', AuthSocialBackandService.unauthorized);
-
   $rootScope.$on('authorized', AuthSocialBackandService.onAuthorized());
-
   $rootScope.$on('$stateChangeSuccess', AuthSocialBackandService.onChangeSuccess);
+  $rootScope.$on('refresh', AuthSocialBackandService.refreshUserCurrent);
+
 });

@@ -1,39 +1,43 @@
 <ion-view view-title="login backand module">
   <!-- do you want padding? -->
   <ion-content class="padding">
-	<h1 ng-show="isAuthorized">{{firstName}}</h1>
-	<h2 ng-show="isAuthorized">
-	<button class="button button-assertive ion-power" ng-click="vm.signout()" type="button" ng-show="isAuthorized"> - {{username}}</button>
+
+	<h1 ng-show="currentUser.isAuthorized">{{currentUser.firstName}}</h1>
+	<h2 ng-show="currentUser.isAuthorized">
+	<button class="button button-assertive ion-power" ng-click="vm.signout()" type="button" ng-show="currentUser.isAuthorized"> {{currentUser.username}}</button>
 	</h2>
     <!-- content goes here -->
 	<p>&nbsp;</p>
 
-	<form ng-submit="vm.signin()" ng-show="isAuthorized">
+	<div ng-show="currentUser.isAuthorized">
 	<h3>Account</h3>
-		<div class="list">
-			<label class="item item-input"><input id="userId" name="userId" type="text" ng-model="userId" ng-disabled="true"></label>
-			<label class="item item-input">
-				<input id="email" name="email" type="email" placeholder="Your email" ng-model="username" ng-disabled="true">
-			</label>
-			<label class="item item-input">
-				<input id="firstName" name="firstName" type="text" placeholder="First Name" ng-model="firstName">
-			</label>
-			<label class="item item-input">
-				<input id="lastName" name="lastName" type="text" placeholder="Last Name" ng-model="lastName">
-			</label>
+		<div class="list card">
+		  <div class="item item-avatar">
+			<img ng-src="img/profile.jpg">
+			<h2>{{currentUser.username}}</h2>
+			<p>User cod: {{currentUser.userId}}</p>
+		  </div>
+
+		  <div class="item item-body">
+			<img class="full-image" src="img/profile-full.jpg">
+			<p>
+			  {{currentUser.firstName}} - {{currentUser.lastName}}
+			</p>
+		  </div>
+
 		</div>
 		<div class="button-bar" >
-			<button class="button button-block button-positive" type="submit">
+			<button class="button button-block button-positive" ng-click="vm.updateAccountGo()">
 				Update Account
 			</button>
 			<a class="button button-block button-assertive" ng-click="vm.updatePasswordGo()">
 				Password Update
 			</a>
 		</div>
-	</form>
+	</div>
 	
 	
-	<form ng-submit="vm.signin()" ng-hide="isAuthorized">
+	<form ng-submit="vm.signin()" ng-hide="currentUser.isAuthorized">
 		<div class="list">
 			<label class="item item-input">
 				<input id="email" name="email" type="email" placeholder="Your email" ng-model="vm.email">
@@ -52,7 +56,7 @@
 		</div>
 	</form>
 	<p>&nbsp;</p>
-	<div class="button-bar" ng-hide="isAuthorized">
+	<div class="button-bar" ng-hide="currentUser.isAuthorized">
 		<button class="button button-positive icon-left ion-social-facebook" ng-click="vm.socialSignin('facebook')" type="button">
 			Facebook
 		</button>
@@ -63,5 +67,7 @@
 			Google+
 		</button>
 	</div>
+	
+	<h1>Login: {{currentUser.isAuthorized}}</h1>
   </ion-content>
 </ion-view>
