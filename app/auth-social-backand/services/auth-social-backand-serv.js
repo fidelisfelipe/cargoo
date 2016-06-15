@@ -1,10 +1,10 @@
 'use strict';
 angular.module('authSocialBackand')
-.service('AuthSocialBackandService', function ($log, $state, $rootScope, $http, Utils, FlashService, Backand) {
+.service('AuthSocialBackandService', function ($log, $state, $http, Utils, FlashService, Backand) {
   $log.log('Hello from your Service: AuthSocialBackandService in module authSocialBackand');
   var service = this;
   service.signin = signin;
-  service.socialSignIn = socialSignIn;
+  service.signinSocial = signinSocial;
   service.signup = signup;
   service.signout = signout;
 
@@ -14,9 +14,18 @@ angular.module('authSocialBackand')
   service.updatePassword = updatePassword;
   service.updateAccount = updateAccount;
 
+  service.getUserCurrent = function () {return Utils.getUserCurrent();};
+  service.refreshData = function () {return Utils.refreshUserCurrentForData();};
+
   //socialSignIn
-  function socialSignIn (provider) {
-    return Backand.socialSignIn(provider);
+  function signinSocial (provider, callback) {
+    return Backand.socialSignIn(provider).then(function (response) {
+      $log.log('signinSocial:', response);
+      onAuthorized(callback);
+    }, function (response) {
+      FlashService.Error(response.data && response.data.error_description || 'Fail on Login, retriver step...');
+      signout();
+    });
   }
   //signout
   function signout () {
@@ -46,18 +55,29 @@ angular.module('authSocialBackand')
       });
   }
   //signup
-  function signup (firstName, lastName, email, password, confirmPassword) {
+  function signup (firstName, lastName, email, password, confirmPassword, callback) {
     $log.log('signup...');
-    return Backand.signup(firstName, lastName, email, password, confirmPassword);
+    return Backand.signup(firstName, lastName, email, password, confirmPassword)
+      .then(function (response) {
+        Utils.onValidSignup(response, callback);
+      }, function (response) {
+        Utils.onErrorSignup(response);
+      });
   }
   //onAuthorized
   function onAuthorized (callback) {
     $log.log('onAuthorized...');
     Backand.getUserDetails().then(function (data) {
       if (data && data.username !== undefined && data.userId) {
+        //init user blank
         Utils.setUserCurrentBlank();
+        //set user logon
         Utils.setUserCurrent(data);
+        //sincronize data for user with model
+        Utils.refreshUserCurrentForData();
+        //set authorized post logon
         Utils.setIsAuthorized();
+        //sincronize var user with root user
         Utils.refreshUserCurrentRoot();
         FlashService.Success('Welcome');
         callback();
@@ -76,6 +96,9 @@ angular.module('authSocialBackand')
     else if (toState.name !== 'authSocialBackandLogin' && !Utils.isAuthorized && Backand.getToken() === undefined) {
       service.unauthorized();
       $state.go('authSocialBackandLogin');
+    }
+    else if (Backand.getToken() !== undefined && Backand.getToken() !== null && Backand.getToken().toString().length > -1) {
+      $log.debug('token valid...');
     }
   }
   //updatePassword

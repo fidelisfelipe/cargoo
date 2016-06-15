@@ -60,10 +60,7 @@ angular.module('authSocialBackand', [
     Backand.setRunSignupAfterErrorInSigninSocial(true);
   });
 
-  $rootScope.$on('logout', AuthSocialBackandService.signout);
-  $rootScope.$on('unauthorized', AuthSocialBackandService.unauthorized);
-  $rootScope.$on('authorized', AuthSocialBackandService.onAuthorized());
   $rootScope.$on('$stateChangeSuccess', AuthSocialBackandService.onChangeSuccess);
-  $rootScope.$on('refresh', AuthSocialBackandService.refreshUserCurrent);
+
 
 });

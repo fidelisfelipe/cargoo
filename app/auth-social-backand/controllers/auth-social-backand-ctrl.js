@@ -12,45 +12,24 @@ angular.module('authSocialBackand')
   vm.signin = signin;
   vm.signUp = signUp;
   vm.signout = signout;
-  vm.socialSignin = socialSignIn;
+  vm.signinSocial = signinSocial;
 
   vm.updateAccount = updateAccount;
   vm.updatePassword = updatePassword;
+  vm.toogleUpdate = function () {return !vm.showUpdate;};
 
   (function init () {
+    vm.currentUser = AuthSocialBackandService.getUserCurrent();
+    vm.updatePwd = false;
+    vm.showUpdate = false;
     $log.log('current state:', $state.current.name);
-    if ($state.current.name === 'authSocialBackandUpdateAccount') {
-      $log.log('form defined signup...');
-      vm.data.user = Utils.getUserCurrent();
-      $log.log('user for update: ', vm.data.user);
-    }
+    $log.debug('vm.currentUser:', vm.currentUser);
+    $log.debug('vm.updatePwd:', vm.updatePwd);
   })();
-  function onValidLogin () {
-    AuthSocialBackandService.onAuthorized();
-    FlashService.Success('welcome ' + $rootScope.currentUser.username);
-    FlashService.Loading(false);
-    loginGo();
-  }
 
-  function onErrorInLogin (rejection) {
-    FlashService.Error(rejection.data && rejection.data.error_description || 'Fail on Login, retriver step...');
-    AuthSocialBackandService.signout();
-    FlashService.Loading(false);
-  }
-
-  function onValidSignup (response) {
-    $log.log('success signup:', response);
-    FlashService.Success('Sign Up Successfull!');
-    loginGo();
-  }
-  function onErrorSignup (response) {
-    $log.log('sigup error: ', response.data);
-    FlashService.Error(response.data.error_description);
-    //TODO: 417 - Critcal Exception (not exist error_description, sigup_error: 'An unexpected signup  exception occured') with enable e-mail confirm
-  }
-  function socialSignIn (provider) {
+  function signinSocial (provider) {
     FlashService.Loading(true);
-    AuthSocialBackandService.socialSignIn(provider).then(onValidLogin, onErrorInLogin);
+    AuthSocialBackandService.signinSocial(provider, loginGo);
     FlashService.Loading(false);
   }
 
@@ -69,8 +48,7 @@ angular.module('authSocialBackand')
 
   function signUp () {
     FlashService.Loading(true);
-    AuthSocialBackandService.signup(vm.firstName, vm.lastName, vm.email, vm.password, vm.again)
-        .then(onValidSignup, onErrorSignup);
+    AuthSocialBackandService.signup(vm.firstName, vm.lastName, vm.email, vm.password, vm.again, loginGo);
     FlashService.Loading(false);
   }
   function onValidUpdatePassword (data) {
@@ -89,19 +67,22 @@ angular.module('authSocialBackand')
       .then(onValidUpdatePassword, onErrorUpdatePassword);
     FlashService.Loading(false);
   }
-  function onErrorUpdateAccount (response) {
-    $log.log('error update password: ', response);
-    FlashService.Error(response.data);
-  }
   function updateAccount () {
+    $log.debug('update data', vm.updatePwd);
     FlashService.Loading(true);
-    AuthSocialBackandService.updateAccount(vm.firstName, vm.lastName, $rootScope.userId)
-      .then(Utils.onValidUpdateAccount, onErrorUpdateAccount);
+    if (!vm.updatePwd) {
+      AuthSocialBackandService.updateAccount(vm.currentUser.firstName, vm.currentUser.lastName, vm.currentUser.userId)
+        .then(Utils.onValidUpdateAccount, Utils.onErrorUpdateAccount);
+    } else {
+      AuthSocialBackandService.updatePassword(vm.currentUser.passwordCurrent, vm.currentUser.passwordNew)
+       .then(onValidUpdatePassword, onErrorUpdatePassword);
+    }
     FlashService.Loading(false);
-    updateAccountGo();
+    $state.go($state.current.name);
   }
 
   function updateAccountGo () {
+    vm.isUpdateAccount = true;
     $state.go('authSocialBackandUpdateAccount');
   }
 
@@ -110,7 +91,8 @@ angular.module('authSocialBackand')
   }
 
   function passwordUpdateGo () {
-    $state.go('authSocialBackandUpdatePassword');
+    vm.isUpdatePassword = true;
+    $state.go('authSocialBackandUpdateAccount');
   }
   function loginGo () {
     $state.go('authSocialBackandLogin');

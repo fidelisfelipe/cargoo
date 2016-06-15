@@ -1,43 +1,78 @@
 <ion-view view-title="login backand module">
   <!-- do you want padding? -->
   <ion-content class="padding">
-
-	<h1 ng-show="currentUser.isAuthorized">{{currentUser.firstName}}</h1>
-	<h2 ng-show="currentUser.isAuthorized">
-	<button class="button button-assertive ion-power" ng-click="vm.signout()" type="button" ng-show="currentUser.isAuthorized"> {{currentUser.username}}</button>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<h2 ng-show="vm.currentUser.isAuthorized">
+			<div class="button-bar" >
+				<button class="button button-block button-assertive ion-power" ng-click="vm.signout()" type="button" ng-show="vm.currentUser.isAuthorized">
+					Close
+				</button>
+		</div>
 	</h2>
     <!-- content goes here -->
-	<p>&nbsp;</p>
-
-	<div ng-show="currentUser.isAuthorized">
+	<div ng-show="vm.currentUser.isAuthorized">
 	<h3>Account</h3>
 		<div class="list card">
-		  <div class="item item-avatar">
+		  <div class="item item-avatar" ng-click="vm.showUpdate = !vm.showUpdate">
 			<img ng-src="img/profile.jpg">
-			<h2>{{currentUser.username}}</h2>
-			<p>User cod: {{currentUser.userId}}</p>
+			<h2>{{vm.currentUser.username}}&nbsp;<i ></h2>
+			<p>User cod: {{vm.currentUser.userId}}</p>
 		  </div>
 
-		  <div class="item item-body">
-			<img class="full-image" src="img/profile-full.jpg">
+		  <div class="item item-body" ng-show="!vm.showUpdate">
+			<img class="full-image" src="img/profile-full.jpg" ng-show="vm.showFullImgProfile">
 			<p>
-			  {{currentUser.firstName}} - {{currentUser.lastName}}
+			  {{vm.currentUser.username}}
+			</p>
+			<p>
+			  {{vm.currentUser.firstName}} - {{vm.currentUser.lastName}}
 			</p>
 		  </div>
 
 		</div>
-		<div class="button-bar" >
-			<button class="button button-block button-positive" ng-click="vm.updateAccountGo()">
-				Update Account
+	</div>
+
+	<div class="list" ng-show="vm.currentUser.isAuthorized && vm.showUpdate">
+        <div class="button-bar" >
+			<button class="button button-block button-positive" ng-click="vm.updatePwd = !vm.updatePwd;" ng-class="{'button button-block button-stable': vm.updatePwd, 'button button-block button-positive': !vm.updatePwd}">
+				Data
 			</button>
-			<a class="button button-block button-assertive" ng-click="vm.updatePasswordGo()">
-				Password Update
-			</a>
+			<button class="button button-block button-stable" ng-click="vm.updatePwd = !vm.updatePwd;" ng-class="{'button button-block button-stable': !vm.updatePwd, 'button button-block button-assertive': vm.updatePwd}">
+				Password
+			</button>
+		</div>
+		<div class="list">
+			<label class="item item-input">
+				Username:&nbsp;<input id="username" name="username" type="email" placeholder="Your email" ng-model="vm.currentUser.username" ng-disabled="true">
+			</label>
+		</div>
+		<div class="list" ng-hide="vm.updatePwd">
+			<label class="item item-input">
+				First Name:&nbsp;<input id="firstName" name="firstName" type="text" placeholder="First Name" ng-model="vm.currentUser.firstName" >
+			</label>
+			<label class="item item-input">
+				Last Name:&nbsp;<input id="lastName" name="lastName" type="text" placeholder="Last Name" ng-model="vm.currentUser.lastName" >
+			</label>
+		</div>
+		<div class="list" ng-show="vm.updatePwd">
+			<label class="item item-input">
+				Current Pwd:&nbsp;<input id="password" name="passwordCurrent" type="password" placeholder="Your password Current" ng-model="vm.currentUser.passwordCurrent">
+			</label>
+			<label class="item item-input">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New Pwd:&nbsp;<input id="password" name="passwordNew" type="password" placeholder="Your password New" ng-model="vm.currentUser.passwordNew">
+			</label>
+		</div>
+		<div class="button-bar" >
+			<button class="button button-block button-positive" ng-click="vm.updateAccount()">
+				Save Data Base
+			</button>
 		</div>
 	</div>
 	
-	
-	<form ng-submit="vm.signin()" ng-hide="currentUser.isAuthorized">
+	<form ng-submit="vm.signin()" ng-hide="vm.currentUser.isAuthorized">
+		<h3>Login</h3>
 		<div class="list">
 			<label class="item item-input">
 				<input id="email" name="email" type="email" placeholder="Your email" ng-model="vm.email">
@@ -56,18 +91,16 @@
 		</div>
 	</form>
 	<p>&nbsp;</p>
-	<div class="button-bar" ng-hide="currentUser.isAuthorized">
-		<button class="button button-positive icon-left ion-social-facebook" ng-click="vm.socialSignin('facebook')" type="button">
+	<div class="button-bar" ng-hide="vm.currentUser.isAuthorized">
+		<button class="button button-positive icon-left ion-social-facebook" ng-click="vm.signinSocial('facebook')" type="button">
 			Facebook
 		</button>
-		<button class="button button-dark icon-left ion-social-facebook ion-social-github" ng-click="vm.socialSignin('github')" type="button">
+		<button class="button button-dark icon-left ion-social-facebook ion-social-github" ng-click="vm.signinSocial('github')" type="button">
 			Github
 		</button>
-		<button class="button button-assertive icon-left ion-social-googleplus" ng-click="vm.socialSignin('google')" type="button">
+		<button class="button button-assertive icon-left ion-social-googleplus" ng-click="vm.signinSocial('google')" type="button">
 			Google+
 		</button>
 	</div>
-	
-	<h1>Login: {{currentUser.isAuthorized}}</h1>
   </ion-content>
 </ion-view>
