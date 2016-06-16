@@ -54,6 +54,17 @@ angular.module('authSocialBackand')
       }
     //TODO: 417 - Critcal Exception (not exist error_description, sigup_error: 'An unexpected signup  exception occured') with enable e-mail confirm
     },
+//onValidUpdatePassword
+    onValidUpdatePassword: function (data, logout) {
+      $log.log('success update password! ', data);
+      FlashService.Success('Change password successfull...');
+      logout();
+    },
+//onErrorUpdatePassword
+    onErrorUpdatePassword: function (data) {
+      $log.log('error update password: ', data);
+      FlashService.Error(data.data);
+    },
 /**
  * Functions for User
  */

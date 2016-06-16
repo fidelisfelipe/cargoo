@@ -15,7 +15,6 @@ angular.module('authSocialBackand')
   vm.signinSocial = signinSocial;
 
   vm.updateAccount = updateAccount;
-  vm.updatePassword = updatePassword;
   vm.toogleUpdate = function () {return !vm.showUpdate;};
 
   (function init () {
@@ -51,22 +50,6 @@ angular.module('authSocialBackand')
     AuthSocialBackandService.signup(vm.firstName, vm.lastName, vm.email, vm.password, vm.again, loginGo);
     FlashService.Loading(false);
   }
-  function onValidUpdatePassword (data) {
-    $log.log('success update password! ', data);
-    FlashService.Success('Change passoword successfull...');
-    AuthSocialBackandService.signout();
-    loginGo();
-  }
-  function onErrorUpdatePassword (response) {
-    $log.log('error update password: ', response);
-    FlashService.Error(response.data);
-  }
-  function updatePassword () {
-    FlashService.Loading(true);
-    AuthSocialBackandService.updatePassword(vm.passwordCurrent, vm.passwordNew)
-      .then(onValidUpdatePassword, onErrorUpdatePassword);
-    FlashService.Loading(false);
-  }
   function updateAccount () {
     $log.debug('update data', vm.updatePwd);
     FlashService.Loading(true);
@@ -74,8 +57,7 @@ angular.module('authSocialBackand')
       AuthSocialBackandService.updateAccount(vm.currentUser.firstName, vm.currentUser.lastName, vm.currentUser.userId)
         .then(Utils.onValidUpdateAccount, Utils.onErrorUpdateAccount);
     } else {
-      AuthSocialBackandService.updatePassword(vm.currentUser.passwordCurrent, vm.currentUser.passwordNew)
-       .then(onValidUpdatePassword, onErrorUpdatePassword);
+      AuthSocialBackandService.updatePassword(vm.currentUser.passwordCurrent, vm.currentUser.passwordNew);
     }
     FlashService.Loading(false);
     $state.go($state.current.name);

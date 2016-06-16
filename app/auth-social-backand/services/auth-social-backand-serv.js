@@ -103,7 +103,12 @@ angular.module('authSocialBackand')
   }
   //updatePassword
   function updatePassword (passwordCurrent, passwordNew) {
-    return Backand.changePassword(passwordCurrent, passwordNew);
+    Backand.changePassword(passwordCurrent, passwordNew)
+      .then(function (response) {
+        Utils.onValidUpdatePassword(response, service.signout);
+      }, function (response) {
+        Utils.onErrorUpdatePassword(response);
+      });
   }
   //updateAccount
   function updateAccount (firstName, lastName, id) {
