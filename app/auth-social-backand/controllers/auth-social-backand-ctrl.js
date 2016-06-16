@@ -54,8 +54,7 @@ angular.module('authSocialBackand')
     $log.debug('update data', vm.updatePwd);
     FlashService.Loading(true);
     if (!vm.updatePwd) {
-      AuthSocialBackandService.updateAccount(vm.currentUser.firstName, vm.currentUser.lastName, vm.currentUser.userId)
-        .then(Utils.onValidUpdateAccount, Utils.onErrorUpdateAccount);
+      AuthSocialBackandService.updateAccount(vm.currentUser.firstName, vm.currentUser.lastName, vm.currentUser.userId);
     } else {
       AuthSocialBackandService.updatePassword(vm.currentUser.passwordCurrent, vm.currentUser.passwordNew);
     }

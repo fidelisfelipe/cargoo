@@ -106,9 +106,7 @@ angular.module('authSocialBackand')
     Backand.changePassword(passwordCurrent, passwordNew)
       .then(function (response) {
         Utils.onValidUpdatePassword(response, service.signout);
-      }, function (response) {
-        Utils.onErrorUpdatePassword(response);
-      });
+      }, Utils.onErrorUpdatePassword);
   }
   //updateAccount
   function updateAccount (firstName, lastName, id) {
@@ -126,6 +124,6 @@ angular.module('authSocialBackand')
       params: {
         returnObject: returnObject
       }
-    });
+    }).then(Utils.onValidUpdateAccount, Utils.onErrorUpdateAccount);
   }
 });
