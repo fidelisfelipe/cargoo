@@ -3,6 +3,9 @@
   "engines": {
     "node": ">=4.0.0"
   },
+  "dependencies": {
+    "bower": "^1.7.9"
+  },
   "devDependencies": {
     "browser-sync": "^2.8.3",
     "chalk": "^1.1.0",
