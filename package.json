@@ -103,7 +103,7 @@
   "scripts": {
     "test": "gulp test",
     "start": "gulp serve",
-    "postinstall": "gulp build"
+    "postinstall": "gulp clean && gulp build"
   },
   "cordovaPlugins": [
     "cordova-plugin-device",
