@@ -10,7 +10,8 @@ var chalk = require('chalk');
 var bsInit = function (paths, openOverride) {
   var bsOptions = {
     server: {
-      baseDir: paths
+      baseDir: paths,
+	  port: process.env.PORT || 3000
     }
   };
   if (options.proxyMapTo && options.proxyPath) {
