@@ -6,7 +6,9 @@ var options = gulp.options;
 // modules
 var bs = require('browser-sync').create();
 var chalk = require('chalk');
-
+console.log('---------------------------------------------------');
+console.log('port of env declared: ', process.env.PORT);
+console.log('---------------------------------------------------');
 var bsInit = function (paths, openOverride) {
   var bsOptions = {
     server: {
