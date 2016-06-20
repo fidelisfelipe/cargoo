@@ -24,7 +24,7 @@ gulp.task('build', buildDependencies, function () {
 gulp.task('clean', function () {
   // pattern is windows-friendly according to https://github.com/mwaylabs/generator-m-ionic/issues/223#issuecomment-196060284
   return gulp.src(['.tmp/**/*.*', '!.tmp/**/app/bower_components/*.*', paths.dist + '/**/*.*'])
-    .pipe(vinylPaths(del));
+    .pipe(vinylPaths(del));//update Fideis Dev for join bower_components not claer for heroku server
 });
 
 // concatenate files in build:blocks inside index.html

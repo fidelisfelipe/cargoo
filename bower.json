@@ -9,7 +9,6 @@
     "angular-dynamic-locale": "~0.1.27",
     "angular-translate": "~2.11.0",
     "angular-translate-loader-static-files": "~2.11.0",
-    "localforage": "~1.4.0",
     "angular-messages": "1.5.5",
     "angular-i18n": "^1.5.5",
     "angular-input-masks": "2.3.0",
