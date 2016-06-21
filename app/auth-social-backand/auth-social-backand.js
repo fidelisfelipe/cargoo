@@ -26,12 +26,6 @@ angular.module('authSocialBackand', [
       cache: false,
       controller: 'AuthSocialBackandCtrl as vm'
     })
-    .state('authSocialBackandUpdatePassword', {
-      url: '/auth/social/backand/update/password',
-      templateUrl: 'auth-social-backand/templates/updatePassword.view.html',
-      cache: false,
-      controller: 'AuthSocialBackandCtrl as vm'
-    })
     .state('authSocialBackandUpdateAccount', {
       url: '/auth/social/backand/update/account',
       templateUrl: 'auth-social-backand/templates/updateAccount.view.html',

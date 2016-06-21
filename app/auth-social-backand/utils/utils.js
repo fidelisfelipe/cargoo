@@ -47,7 +47,7 @@ angular.module('authSocialBackand')
         if (response.data.error_description === 'Membership failure:InvalidPassword') {
           FlashService.Error('password is lenght invalid! Must 6 digits!');
         } else {
-          FlashService.Error(response.data);
+          FlashService.Error(response.data.error_description);
         }
       } else {
         FlashService.Error(response.data.error_description);
