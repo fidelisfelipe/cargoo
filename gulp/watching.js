@@ -6,16 +6,18 @@ var options = gulp.options;
 // modules
 var bs = require('browser-sync').create();
 var chalk = require('chalk');
-console.log('---------------------------------------------------');
-console.log('port of env declared: ', process.env.PORT);
-console.log('---------------------------------------------------');
+
 var bsInit = function (paths, openOverride) {
   var bsOptions = {
     server: {
       baseDir: paths,
-	  port: process.env.PORT || 3000
-    }
+    },
+    port: process.env.PORT || 3000,
+    open: process.env.PORT ? false : 'external'
   };
+console.log('---------------------------------------------------');
+console.log('port for use ', bsOptions.port);
+console.log('---------------------------------------------------');
   if (options.proxyMapTo && options.proxyPath) {
     var url = require('url');
     var proxy = require('proxy-middleware');
